@@ -4,14 +4,13 @@ import logging as log
 
 import random
 
-
 class CustomHttpProxyMiddleware(object):
 
     def process_request(self, request, spider):
         if self.use_proxy(request):
             p = random.choice(HTTPPROXIES)
             try:
-                request.meta['updateproxy'] = "http://%s" % p['ip_port']
+                request.meta['proxy'] = "http://%s" % p['ip_port']
             except Exception, e:
                 log.critical("Exception %s" % e)
 
@@ -24,7 +23,7 @@ class CustomHttpsProxyMiddleware(object):
         if self.use_proxy(request):
             p = random.choice(HTTPSPROXIES)
             try:
-                request.meta['updateproxy'] = "http://%s" % p['ip_port']
+                request.meta['proxy'] = "http://%s" % p['ip_port']
             except Exception, e:
                 log.critical("Exception %s" % e)
 

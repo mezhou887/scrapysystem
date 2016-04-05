@@ -1,0 +1,7 @@
+1. http://lfstar.blog.163.com/blog/static/5637898720134365651965/
+	如果在MacOSX (Mountain Lion),必须先执行两条export，否则在编译阶段会报错：'sed: RE error: illegal byte sequence'
+	先执行这两句。
+	export LC_COLLATE='C'
+	export LC_CTYPE='C'
+	
+2. 一定要记录url下来的

@@ -1,13 +1,13 @@
-
+# -*- coding: utf-8 -*-
 from scrapy.selector import Selector
 from scrapy.http import HtmlResponse
 
-from scrapy.contrib.spiders import Spider, CrawlSpider, XMLFeedSpider, CSVFeedSpider
-from scrapy.contrib.spiders import Rule
+from scrapy.spiders import Spider, CrawlSpider, XMLFeedSpider, CSVFeedSpider
+from scrapy.spiders import Rule
 from scrapy.linkextractors import LinkExtractor
 from scrapy.linkextractors.lxmlhtml import LxmlLinkExtractor 
 
-from template.template.items import *
+from template.items import *    #这个错误是eclipse自己的编译器错误
 from misc.log import *
 from misc.spider import CommonSpider
 from scrapy_redis.spiders import RedisMixin
