@@ -44,3 +44,41 @@ class cnbetaSpider(CommonSpider):
         item = self.parse_with_rules(response, self.item_rules, cnbetaItem)
         pp.pprint(item)
         return item
+        
+        
+class cnbetaRedisSpider(RedisMixin, CommonSpider):  
+    name = 'cnbeta_redis'
+    allowed_domains = ["cnbeta.com"]
+    start_urls = [
+        "http://www.cnbeta.com/",
+    ]
+    
+    rules = [
+        #Rule(LinkExtractor(allow=("/articles/.*\.htm")), callback='parse_test', follow=True),
+        Rule(LinkExtractor(allow=("/articles/.*\.htm")), callback='parse_cnbeta', follow=True)
+    ] 
+
+    item_rules = { 
+        '//title': {
+            '__use': 'dump',                    
+            'title': 'text()',
+            '__link': 'pagelink',
+        }   
+    }        
+    
+    def __init__(self, *args, **kwargs):
+        super(cnbetaRedisSpider, self).__init__(*args, **kwargs)
+    
+    def parse_test(self, response):
+        log.info('Parse '+response.url)
+        pp.pprint(self.parse_with_rules(response, self.item_rules, dict))
+    
+    def _set_crawler(self, crawler):
+        CrawlSpider._set_crawler(self, crawler)
+        RedisMixin.setup_redis(self)
+        
+    def parse_cnbeta(self, response):
+        log.info('Parse '+response.url)
+        item = self.parse_with_rules(response, self.item_rules, cnbetaItem)
+        pp.pprint(item)
+        return item     

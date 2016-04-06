@@ -42,11 +42,11 @@ class templateSpider(CommonSpider):
     def parse_template(self, response):
         log.info('Parse '+response.url)
         item = self.parse_with_rules(response, self.item_rules, templateItem)
-        item['link'] = response.url
+        pp.pprint(item)
         return item
         
         
-class templateRedisSpider(RedisMixin, CrawlSpider):  
+class templateRedisSpider(RedisMixin, CommonSpider):  
     name = 'template_redis'
     allowed_domains = ["template.com"]
     start_urls = [
@@ -55,6 +55,7 @@ class templateRedisSpider(RedisMixin, CrawlSpider):
     
     rules = [
         Rule(LinkExtractor(allow=("/subject/\d+/?$")), callback='parse_test', follow=True),
+        # Rule(LinkExtractor(allow=("/subject/\d+/?$")), callback='parse_template', follow=True),
     ] 
 
     item_rules = { 
@@ -79,7 +80,7 @@ class templateRedisSpider(RedisMixin, CrawlSpider):
     def parse_template(self, response):
         log.info('Parse '+response.url)
         item = self.parse_with_rules(response, self.item_rules, templateItem)
-        item['link'] = response.url
+        pp.pprint(item)
         return item 
         
         
