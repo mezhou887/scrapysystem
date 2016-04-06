@@ -20,24 +20,30 @@ class templateSpider(CommonSpider):
     ]
     
     rules = [
-        Rule(LinkExtractor(allow=("/subject/\d+/?$")), callback='parse_template', follow=True),
+        Rule(LinkExtractor(allow=("/subject/\d+/?$")), callback='parse_test', follow=True),
+        # Rule(LinkExtractor(allow=("/subject/\d+/?$")), callback='parse_template', follow=True),
     ]
 
     item_rules = { 
-        '.linkto': {
-            'url': 'a::attr(href)',
-            'name': 'a::text',
+        '//title': {
+            '__use': 'dump',                    
+            'title': 'text()',
+            '__link': 'pagelink',
         }   
     }     
     
     def __init__(self, *args, **kwargs):
         super(templateSpider, self).__init__(*args, **kwargs)
+        
+    def parse_test(self, response):
+        log.info('Parse '+response.url)
+        pp.pprint(self.parse_with_rules(response, self.item_rules, dict))      
 
     def parse_template(self, response):
         log.info('Parse '+response.url)
-        items = self.parse_with_rules(response, self.item_rules, templateItem)
-        pp.pprint(items)
-        return items
+        item = self.parse_with_rules(response, self.item_rules, templateItem)
+        item['link'] = response.url
+        return item
         
         
 class templateRedisSpider(RedisMixin, CrawlSpider):  
@@ -48,19 +54,23 @@ class templateRedisSpider(RedisMixin, CrawlSpider):
     ]
     
     rules = [
-        Rule(LinkExtractor(), callback='parse_template', follow=True),
+        Rule(LinkExtractor(allow=("/subject/\d+/?$")), callback='parse_test', follow=True),
     ] 
 
     item_rules = { 
-        '.linkto': {
-            'url': 'a::attr(href)',
-            'name': 'a::text',
+        '//title': {
+            '__use': 'dump',                    
+            'title': 'text()',
+            '__link': 'pagelink',
         }   
     }        
     
     def __init__(self, *args, **kwargs):
         super(templateRedisSpider, self).__init__(*args, **kwargs)
     
+    def parse_test(self, response):
+        log.info('Parse '+response.url)
+        pp.pprint(self.parse_with_rules(response, self.item_rules, dict))
     
     def _set_crawler(self, crawler):
         CrawlSpider._set_crawler(self, crawler)
@@ -68,9 +78,9 @@ class templateRedisSpider(RedisMixin, CrawlSpider):
         
     def parse_template(self, response):
         log.info('Parse '+response.url)
-        items = self.parse_with_rules(response, self.item_rules, templateItem)
-        pp.pprint(items)
-        return items   
+        item = self.parse_with_rules(response, self.item_rules, templateItem)
+        item['link'] = response.url
+        return item 
         
         
         

@@ -1,12 +1,16 @@
-
+# -*- coding: utf-8 -*-
 from scrapy.selector import Selector
+from scrapy.http import HtmlResponse
 
+from scrapy.spiders import Spider, CrawlSpider, XMLFeedSpider, CSVFeedSpider
 from scrapy.spiders import Rule
 from scrapy.linkextractors import LinkExtractor
+from scrapy.linkextractors.lxmlhtml import LxmlLinkExtractor 
 
-from cnbeta.items import *
-from misc.log import log, pp
+from cnbeta.items import *    #这个错误是eclipse自己的编译器错误
+from misc.log import *
 from misc.spider import CommonSpider
+from scrapy_redis.spiders import RedisMixin
 
 class cnbetaSpider(CommonSpider):
     name = "cnbeta"
@@ -16,24 +20,27 @@ class cnbetaSpider(CommonSpider):
     ]
     
     rules = [
-        Rule(LinkExtractor(allow=("/articles/.*\.htm")), callback='parse_cnbeta', follow=True),
+        #Rule(LinkExtractor(allow=("/articles/.*\.htm")), callback='parse_test', follow=True),
+        Rule(LinkExtractor(allow=("/articles/.*\.htm")), callback='parse_cnbeta', follow=True)
     ]
 
     item_rules = { 
-        'title': '//title/text()',    
-        '__link': 'pagelink',
+        '//title': {
+            '__use': 'dump',                    
+            'title': 'text()',
+            '__link': 'pagelink',
+        }   
     }     
     
     def __init__(self, *args, **kwargs):
         super(cnbetaSpider, self).__init__(*args, **kwargs)
+        
+    def parse_test(self, response):
+        log.info('Parse '+response.url)
+        pp.pprint(self.parse_with_rules(response, self.item_rules, dict))      
 
     def parse_cnbeta(self, response):
-        for k, v in self.item_rules.items():
-            print(k,v)
         log.info('Parse '+response.url)
         item = self.parse_with_rules(response, self.item_rules, cnbetaItem)
-        return item 
-        
-        
-        
-        
+        pp.pprint(item)
+        return item
