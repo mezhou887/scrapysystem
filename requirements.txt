@@ -1,0 +1,4 @@
+beautifulsoup4==4.4.1
+Scrapy==1.0.5
+BloomFilter==0.1.0
+lxml==3.6.0
