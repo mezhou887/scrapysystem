@@ -14,3 +14,6 @@
 
 4. MongoDB安装步骤
 	TODO
+	
+5. scrapy中文文档
+	http://blog.csdn.net/iloveyin/article/details/41309679
