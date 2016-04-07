@@ -9,10 +9,10 @@ from scrapy.linkextractors.lxmlhtml import LxmlLinkExtractor
 
 from template.items import *    #这个错误是eclipse自己的编译器错误
 from misc.log import *
-from misc.spider import CommonSpider
+from misc.xpathspider import XpathSpider
 from scrapy_redis.spiders import RedisMixin
 
-class templateSpider(CommonSpider):
+class templateSpider(XpathSpider):
     name = "template"
     allowed_domains = ["template.com"]
     start_urls = [
@@ -46,7 +46,7 @@ class templateSpider(CommonSpider):
         return item
         
         
-class templateRedisSpider(RedisMixin, CommonSpider):  
+class templateRedisSpider(RedisMixin, XpathSpider):  
     name = 'template_redis'
     allowed_domains = ["template.com"]
     start_urls = [

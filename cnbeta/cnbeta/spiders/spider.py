@@ -9,10 +9,10 @@ from scrapy.linkextractors.lxmlhtml import LxmlLinkExtractor
 
 from cnbeta.items import *    #这个错误是eclipse自己的编译器错误
 from misc.log import *
-from misc.spider import CommonSpider
+from misc.xpathspider import XpathSpider
 from scrapy_redis.spiders import RedisMixin
 
-class cnbetaSpider(CommonSpider):
+class cnbetaSpider(XpathSpider):
     name = "cnbeta"
     allowed_domains = ["cnbeta.com"]
     start_urls = [
@@ -46,7 +46,7 @@ class cnbetaSpider(CommonSpider):
         return item
         
         
-class cnbetaRedisSpider(RedisMixin, CommonSpider):  
+class cnbetaRedisSpider(RedisMixin, XpathSpider):  
     name = 'cnbeta_redis'
     allowed_domains = ["cnbeta.com"]
     start_urls = [

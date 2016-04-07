@@ -3,5 +3,3 @@
 	先执行这两句。
 	export LC_COLLATE='C'
 	export LC_CTYPE='C'
-	
-2. 一定要记录url下来的
