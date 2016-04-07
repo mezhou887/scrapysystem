@@ -12,7 +12,7 @@ from misc.log import *
 from misc.xpathspider import XpathSpider
 from scrapy_redis.spiders import RedisMixin
 
-class templateSpider(XpathSpider):
+class templateXpathSpider(XpathSpider):
     name = "template"
     allowed_domains = ["template.com"]
     start_urls = [
@@ -33,7 +33,7 @@ class templateSpider(XpathSpider):
     }     
     
     def __init__(self, *args, **kwargs):
-        super(templateSpider, self).__init__(*args, **kwargs)
+        super(templateXpathSpider, self).__init__(*args, **kwargs)
         
     def parse_test(self, response):
         log.info('Parse '+response.url)
@@ -46,7 +46,7 @@ class templateSpider(XpathSpider):
         return item
         
         
-class templateRedisSpider(RedisMixin, XpathSpider):  
+class templateXpathRedisSpider(RedisMixin, XpathSpider):  
     name = 'template_redis'
     allowed_domains = ["template.com"]
     start_urls = [
@@ -67,7 +67,7 @@ class templateRedisSpider(RedisMixin, XpathSpider):
     }        
     
     def __init__(self, *args, **kwargs):
-        super(templateRedisSpider, self).__init__(*args, **kwargs)
+        super(templateXpathRedisSpider, self).__init__(*args, **kwargs)
     
     def parse_test(self, response):
         log.info('Parse '+response.url)
