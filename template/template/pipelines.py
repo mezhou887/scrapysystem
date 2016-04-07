@@ -46,7 +46,18 @@ class MongoDBPipeline(object):
         return item
     
     def spider_closed(self, spider):
-        pass  
+        pass
+    
+class MySQLPipeline(object):
+    
+    def __init__(self):
+        pass
+    
+    def process_item(self, item, spider):
+        return item
+    
+    def spider_closed(self, spider):
+        pass     
 
 
 class RedisPipeline(object):

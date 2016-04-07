@@ -15,7 +15,8 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
    #'template.pipelines.DoNothingPipeline': 300,
     'template.pipelines.JsonWithEncodingPipeline': 300,
-   #'template.pipelines.MongoDBPipeline': 300,    
+   #'template.pipelines.MongoDBPipeline': 300,   
+   #'template.pipelines.MySQLPipeline': 300,    
    #'template.pipelines.RedisPipeline': 300,
 }
 
