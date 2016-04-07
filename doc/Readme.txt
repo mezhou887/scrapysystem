@@ -3,3 +3,14 @@
 	先执行这两句。
 	export LC_COLLATE='C'
 	export LC_CTYPE='C'
+	
+	
+2. redis安装步骤
+	参考 http://blog.csdn.net/zhaoqiubo/article/details/47445431
+	redis.sh内容: /usr/local/bin/redis-server /usr/local/redis/etc/redis.conf &
+	
+3. MySQL安装步骤
+	TODO
+
+4. MongoDB安装步骤
+	TODO
