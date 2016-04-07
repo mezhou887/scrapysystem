@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+'''
+Created on 2016年4月7日
+
+@author: 周茂恩
+'''
 from scrapy.selector import Selector
 import unittest
 
@@ -65,7 +71,11 @@ class TestXpathFunctions(unittest.TestCase):
         print '6.', sel.xpath('//a[@href="image2.html"]/*').extract()
 
         # 7. [u'<br>', u'<br>', u'<br>', u'<br>', u'<br>']
-        print '7.', sel.xpath('//a/*[1]').extract()   
+        print '7.', sel.xpath('//a/*[1]').extract()  
+        
+if __name__ == "__main__":
+    unittest.main()      
+         
 
 
 
