@@ -11,4 +11,5 @@ encoding//template/template/spiders/spider.py=utf-8
 encoding//test/csstest.py=utf-8
 encoding//test/regextest.py=utf-8
 encoding//test/xpathtest.py=utf-8
+encoding/backup.py=utf-8
 encoding/updateproxy.py=utf-8

@@ -5,7 +5,7 @@ import re
 from scrapy.selector import Selector
 from scrapy.spiders import CrawlSpider
 
-class CommonSpider(CrawlSpider):
+class CssSpider(CrawlSpider):
 
     keywords = set(['__use', '__list'])
     def extract_item(self, sels):
