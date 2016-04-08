@@ -14,7 +14,6 @@ import requests
 # link3: http://www.cnblogs.com/ziyunfei/archive/2012/10/05/2710631.html
 # link4: http://www.cnblogs.com/think/archive/2006/10/11/525947.html
 
-
 class TestXpathFunctions(unittest.TestCase):
 
     sample1 = '''
@@ -34,12 +33,6 @@ class TestXpathFunctions(unittest.TestCase):
         </body>
     </html>
     '''
-
-    def setUp(self):
-        pass
-    
-    def tearDown(self):
-        pass
     
     def testSample1(self):
         sel = Selector(text=self.sample1);
@@ -84,18 +77,9 @@ class TestXpathFunctions(unittest.TestCase):
     def testSample3(self):
         r = requests.get('http://www.cnbeta.com/')
         response = HtmlResponse(url='http://www.cnbeta.com/', body=r.content)
-        print '9.', Selector(response=response).xpath('//title/text()').extract()   
+        print '9.', Selector(response=response).xpath('//title/text()').extract()[0]   
         print '10.', Selector(response=response).xpath('//title/text()').extract()[0].encode('utf-8')        
         
 if __name__ == "__main__":
     unittest.main()      
          
-
-
-
-
-
-
-
-
-
