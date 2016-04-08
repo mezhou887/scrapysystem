@@ -18,3 +18,6 @@
 5. scrapy中文文档
 	http://blog.csdn.net/iloveyin/article/details/41309679
 	http://scrapy-chs.readthedocs.org/zh_CN/latest
+	
+6. 一行代码升级所有已安装的第三方包
+pip list --outdated | grep '^[a-z]* (' | cut -d " " -f 1 | xargs pip install -U
