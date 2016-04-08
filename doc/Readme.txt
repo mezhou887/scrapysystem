@@ -17,3 +17,4 @@
 	
 5. scrapy中文文档
 	http://blog.csdn.net/iloveyin/article/details/41309679
+	http://scrapy-chs.readthedocs.org/zh_CN/latest
