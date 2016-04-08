@@ -5,7 +5,9 @@ Created on 2016年4月7日
 @author: 周茂恩
 '''
 from scrapy.selector import Selector
+from scrapy.http import HtmlResponse
 import unittest
+import requests
 
 # link1: http://www.cnblogs.com/08shiyan/archive/2013/05/02/3055078.html
 # link2: http://www.w3school.com.cn/xpath/index.asp
@@ -72,6 +74,18 @@ class TestXpathFunctions(unittest.TestCase):
 
         # 7. [u'<br>', u'<br>', u'<br>', u'<br>', u'<br>']
         print '7.', sel.xpath('//a/*[1]').extract()  
+        
+        
+    def testSample2(self):
+        r = requests.get('http://doc.scrapy.org/en/latest/_static/selectors-sample1.html')
+        response = HtmlResponse(url='http://doc.scrapy.org/en/latest/_static/selectors-sample1.html', body=r.content)
+        print '8.', Selector(response=response).xpath('//title/text()').extract()   
+        
+    def testSample3(self):
+        r = requests.get('http://www.cnbeta.com/')
+        response = HtmlResponse(url='http://www.cnbeta.com/', body=r.content)
+        print '9.', Selector(response=response).xpath('//title/text()').extract()   
+        print '10.', Selector(response=response).xpath('//title/text()').extract()[0].encode('utf-8')        
         
 if __name__ == "__main__":
     unittest.main()      
