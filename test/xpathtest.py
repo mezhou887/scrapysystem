@@ -70,13 +70,15 @@ class TestXpathFunctions(unittest.TestCase):
         
         
     def testSample2(self):
-        r = requests.get('http://doc.scrapy.org/en/latest/_static/selectors-sample1.html')
-        response = HtmlResponse(url='http://doc.scrapy.org/en/latest/_static/selectors-sample1.html', body=r.content)
+        str = 'http://doc.scrapy.org/en/latest/_static/selectors-sample1.html'
+        r = requests.get(str)
+        response = HtmlResponse(url=str, body=r.content)
         print '8.', Selector(response=response).xpath('//title/text()').extract()   
         
     def testSample3(self):
-        r = requests.get('http://www.cnbeta.com/')
-        response = HtmlResponse(url='http://www.cnbeta.com/', body=r.content)
+        str = 'http://www.cnbeta.com/'
+        r = requests.get(str)
+        response = HtmlResponse(url=str, body=r.content)
         print '9.', Selector(response=response).xpath('//title/text()').extract()[0]   
         print '10.', Selector(response=response).xpath('//title/text()').extract()[0].encode('utf-8')        
         
