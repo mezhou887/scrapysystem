@@ -2,7 +2,7 @@
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
-from template.items import *    #这个错误是eclipse自己的编译器错误
+from template.items import templateItem    #这个错误是eclipse自己的编译器错误，不用管
 from misc.log import log, pp
 from misc.xpathspider import XpathSpider
 from misc.cssspider import CssSpider
@@ -141,13 +141,4 @@ class templateCssRedisSpider(RedisMixin, CssSpider):
         item = self.parse_with_rules(response, self.item_rules, templateItem)
         pp.pprint(item)
         return item      
-    
-    
-    
-    
-    
-    
-    
-    
-        
-    
+      
