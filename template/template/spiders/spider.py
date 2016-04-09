@@ -2,7 +2,7 @@
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
-from template.items import templateItem    #这个错误是eclipse自己的编译器错误，不用管
+from template.items import *    #这个错误是eclipse自己的编译器错误，不用管
 from misc.log import log, pp
 from misc.xpathspider import XpathSpider
 from misc.cssspider import CssSpider
@@ -16,8 +16,7 @@ class templateXpathSpider(XpathSpider):
     ]
     
     rules = [
-        Rule(LinkExtractor(allow=("/subject/\d+/?$")), callback="parse_test", follow=True),
-        # Rule(LinkExtractor(allow=("/subject/\d+/?$")), callback='parse_template', follow=True),
+        Rule(LinkExtractor(allow=("/a/[0-9]+\.html")), callback='parse_template', follow=True),
     ]
 
     item_rules = { 
@@ -30,13 +29,11 @@ class templateXpathSpider(XpathSpider):
     
     def __init__(self, *args, **kwargs):
         super(templateXpathSpider, self).__init__(*args, **kwargs)
-        
-    def parse_test(self, response):
-        log.info('Parse '+response.url)
-        pp.pprint(self.parse_with_rules(response, self.item_rules, dict))      
+        log.debug('__init__')          
 
     def parse_template(self, response):
         log.info('Parse '+response.url)
+        # pp.pprint(self.parse_with_rules(response, self.item_rules, dict)) 
         item = self.parse_with_rules(response, self.item_rules, templateItem)
         pp.pprint(item)
         return item
@@ -50,8 +47,7 @@ class templateXpathRedisSpider(RedisMixin, XpathSpider):
     ]
     
     rules = [
-        Rule(LinkExtractor(allow=("/subject/\d+/?$")), callback="parse_test", follow=True),
-        # Rule(LinkExtractor(allow=("/subject/\d+/?$")), callback='parse_template', follow=True),
+        Rule(LinkExtractor(allow=("/a/[0-9]+\.html")), callback='parse_template', follow=True),
     ] 
 
     item_rules = { 
@@ -64,10 +60,7 @@ class templateXpathRedisSpider(RedisMixin, XpathSpider):
     
     def __init__(self, *args, **kwargs):
         super(templateXpathRedisSpider, self).__init__(*args, **kwargs)
-    
-    def parse_test(self, response):
-        log.info('Parse '+response.url)
-        pp.pprint(self.parse_with_rules(response, self.item_rules, dict))
+        log.debug('__init__')            
     
     def _set_crawler(self, crawler):
         CrawlSpider._set_crawler(self, crawler)
@@ -75,9 +68,11 @@ class templateXpathRedisSpider(RedisMixin, XpathSpider):
         
     def parse_template(self, response):
         log.info('Parse '+response.url)
+        # pp.pprint(self.parse_with_rules(response, self.item_rules, dict))
         item = self.parse_with_rules(response, self.item_rules, templateItem)
         pp.pprint(item)
         return item 
+
         
 class templateCssSpider(CssSpider):
     name = "template"
@@ -87,8 +82,7 @@ class templateCssSpider(CssSpider):
     ]
     
     rules = [
-        Rule(LinkExtractor(allow=("/subject/\d+/?$"), callback="parse_test", follow=True)),
-        # Rule(LinkExtractor(allow=("/subject/\d+/?$"), callback="parse_template", follow=True)),
+        Rule(LinkExtractor(allow=("/a/[0-9]+\.html"), callback="parse_template", follow=True)),
     ]  
     
     item_rules = {
@@ -97,18 +91,16 @@ class templateCssSpider(CssSpider):
       
     def __init__(self, *args, **kwargs):
         super(templateCssSpider, self).__init__(*args, **kwargs)
-        
-    def parse_test(self, response):
-        log.info('Parse '+response.url)
-        pp.pprint(self.parse_with_rules(response, self.item_rules, dict))      
+        log.debug('__init__')                   
 
     def parse_template(self, response):
         log.info('Parse '+response.url)
+        # pp.pprint(self.parse_with_rules(response, self.item_rules, dict)) 
         item = self.parse_with_rules(response, self.item_rules, templateItem)
         pp.pprint(item)
         return item   
     
-    
+     
 class templateCssRedisSpider(RedisMixin, CssSpider):
     name = 'template_redis'
     allowed_domains = ["template.com"]
@@ -117,8 +109,7 @@ class templateCssRedisSpider(RedisMixin, CssSpider):
     ]
     
     rules = [
-        Rule(LinkExtractor(allow=("/subject/\d+/?$"), callback="parse_test", follow=True)),
-        # Rule(LinkExtractor(allow=("/subject/\d+/?$"), callback="parse_template", follow=True)),
+        Rule(LinkExtractor(allow=("/a/[0-9]+\.html"), callback="parse_template", follow=True)),
     ]  
     
     item_rules = {
@@ -127,10 +118,7 @@ class templateCssRedisSpider(RedisMixin, CssSpider):
       
     def __init__(self, *args, **kwargs):
         super(templateCssRedisSpider, self).__init__(*args, **kwargs)
-        
-    def parse_test(self, response):
-        log.info('Parse '+response.url)
-        pp.pprint(self.parse_with_rules(response, self.item_rules, dict))   
+        log.debug('__init__')     
         
     def _set_crawler(self, crawler):
         CrawlSpider._set_crawler(self, crawler)
@@ -138,7 +126,9 @@ class templateCssRedisSpider(RedisMixin, CssSpider):
 
     def parse_template(self, response):
         log.info('Parse '+response.url)
+        # pp.pprint(self.parse_with_rules(response, self.item_rules, dict))
         item = self.parse_with_rules(response, self.item_rules, templateItem)
         pp.pprint(item)
         return item      
-      
+    
+    
