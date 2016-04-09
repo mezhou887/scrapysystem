@@ -45,6 +45,17 @@ class MongoDBPipeline(object):
     
     def spider_closed(self, spider):
         pass
+
+class CsvPipeline(object):
+    
+    def __init__(self):
+        pass
+    
+    def process_item(self, item, spider):
+        return item
+    
+    def spider_closed(self, spider):
+        pass    
     
 class MySQLPipeline(object):
     
