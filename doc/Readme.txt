@@ -4,16 +4,42 @@
 	export LC_COLLATE='C'
 	export LC_CTYPE='C'
 	
-	
 2. redis安装步骤
-	参考 http://blog.csdn.net/zhaoqiubo/article/details/47445431
-	redis.sh内容: /usr/local/bin/redis-server /usr/local/redis/etc/redis.conf &
+	参考 http://blog.csdn.net/zhaoqiubo/article/details/47445431 具体如下:
+    cd /Users/zhoumaoen
+	curl -O http://download.redis.io/releases/redis-3.0.7.tar.gz
+	tar -zxvf redis-3.0.7.tar.gz
+	cp -R -n redis-3.0.7/ /usr/local/redis
+	cd /usr/local/redis
+	sudo make test
+	sudo make install
+	mkdir -p /Users/zhoumaoen/redis/bin
+	mkdir -p /Users/zhoumaoen/redis/etc
+	mkdir -p /Users/zhoumaoen/data/redis/
+	cp /usr/local/redis/src/mkreleasehdr.sh /Users/zhoumaoen/redis/bin
+	cp /usr/local/redis/src/redis-benchmark /Users/zhoumaoen/redis/bin
+	cp /usr/local/redis/src/redis-check-dump /Users/zhoumaoen/redis/bin
+	cp /usr/local/redis/src/redis-cli /Users/zhoumaoen/redis/bin
+	cp /usr/local/redis/src/redis-server /Users/zhoumaoen/redis/bin
+	下载这个文件https://github.com/mezhou887/scrapysystem/blob/master/doc/redis.conf并保存到/Users/zhoumaoen/redis/etc中
 	
-3. MySQL安装步骤
-	TODO
+	执行命令启动: /Users/zhoumaoen/redis/bin/redis-server /Users/zhoumaoen/redis/etc/redis.conf &
+	
+3. MongoDB安装步骤
+    cd /Users/zhoumaoen
+	mkdir -p /Users/zhoumaoen/MongoDB
+	curl -O https://fastdl.mongodb.org/osx/mongodb-osx-x86_64-3.2.4.tgz
+	tar -zxvf mongodb-osx-x86_64-3.2.4.tgz
+	cp -R -n mongodb-osx-x86_64-3.2.4/ /Users/zhoumaoen/MongoDB
+	mkdir -p /Users/zhoumaoen/data/mongodb
+	chmod 777 /Users/zhoumaoen/data/mongodb
+	执行命令启动: /Users/zhoumaoen/MongoDB/bin/mongod --dbpath /Users/zhoumaoen/data/mongodb &
 
-4. MongoDB安装步骤
-	TODO
+4. MySQL安装步骤
+	参考 http://www.cnblogs.com/macro-cheng/archive/2011/10/25/mysql-001.html
+	账号密码 mezhou887/Admin1234#
+	在系统偏好设置中启动MySQL 
+	卸载 MySQL: http://www.cnblogs.com/TsengYuen/archive/2011/12/06/2278574.html
 	
 5. scrapy中文文档
 	http://blog.csdn.net/iloveyin/article/details/41309679
