@@ -34,6 +34,7 @@
 	mkdir -p /Users/zhoumaoen/data/mongodb
 	chmod 777 /Users/zhoumaoen/data/mongodb
 	执行命令启动: /Users/zhoumaoen/MongoDB/bin/mongod --dbpath /Users/zhoumaoen/data/mongodb &
+	访问地址: http://localhost:27017/ 查看是否安装成功
 
 4. MySQL安装步骤
 	参考 http://www.cnblogs.com/macro-cheng/archive/2011/10/25/mysql-001.html
