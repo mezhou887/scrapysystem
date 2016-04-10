@@ -46,4 +46,7 @@
 	http://scrapy-chs.readthedocs.org/zh_CN/latest
 	
 6. 一行代码升级所有已安装的第三方包
-pip list --outdated | grep '^[a-z]* (' | cut -d " " -f 1 | xargs pip install -U
+	pip list --outdated | grep '^[a-z]* (' | cut -d " " -f 1 | xargs pip install -U
+
+7. Xpath在FireFox下的插件
+	Xpath Checker 0.4.4.1
