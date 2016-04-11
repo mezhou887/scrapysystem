@@ -51,3 +51,7 @@
 
 7. Xpath在FireFox下的插件
 	Xpath Checker 0.4.4.1
+	
+8. 爬虫链接
+	http://python.jobbole.com/84772/
+		
