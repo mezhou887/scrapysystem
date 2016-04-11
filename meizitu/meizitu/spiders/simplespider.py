@@ -40,5 +40,7 @@ class meizituSpider(scrapy.Spider):
         item = meizituItem()
         item['pagelink'] = response.url
         item['title'] = response.xpath('//title/text()').extract()
+        item['name'] = response.xpath('//h2/a/text()').extract()
+        item['image_urls'] = response.xpath('//div[@id="picture"]/p/img/@src').extract()
         return item          
 

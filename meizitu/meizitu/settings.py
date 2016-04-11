@@ -14,6 +14,7 @@ DOWNLOADER_MIDDLEWARES = {
 
 ITEM_PIPELINES = {
    #'meizitu.pipelines.DoNothingPipeline': 300,
+  'meizitu.pipelines.ImageDownloadPipeline': 200,
     'meizitu.pipelines.JsonWithEncodingPipeline': 300,
    #'meizitu.pipelines.CsvPipeline': 300,  
    #'meizitu.pipelines.MongoDBPipeline': 300,   
@@ -25,5 +26,6 @@ LOG_FILE = 'meizitu.log'
 LOG_LEVEL = 'INFO'
 #LOG_LEVEL = 'DEBUG'
 
+IMAGES_STORE = '/Users/zhoumaoen/data/images'
 DOWNLOAD_DELAY = 1
 DOWNLOAD_TIMEOUT = 10

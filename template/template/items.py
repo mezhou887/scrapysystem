@@ -8,4 +8,8 @@ from scrapy.item import Item, Field
 class templateItem(Item):
     # define the fields for your item here like:
     pagelink = Field()
+    title = Field()
+    name = Field()
+    image_urls = Field()
+    images = Field()
 
