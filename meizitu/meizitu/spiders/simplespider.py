@@ -2,18 +2,18 @@
 import scrapy
 import logging
 
-from template.items import *    #这个错误是eclipse自己的编译器错误
+from meizitu.items import *    #这个错误是eclipse自己的编译器错误
 from scrapy.selector import Selector
 
 # 范例1，使用最基本的Spider来完成
 # 1. 从主页得到所有列表页的首页链接
 # 2. 根据列表页的首页链接去得到下一页的链接，递归的遍历完整个列表页
 # 3. 在每个列表页中找到内容页的链接，然后去访问具体的内容页
-class templateSpider(scrapy.Spider):
-    name = "template_v1"
-    allowed_domains = ["template.com"]
+class meizituSpider(scrapy.Spider):
+    name = "meizitu_v1"
+    allowed_domains = ["meizitu.com"]
     start_urls = [
-        "http://www.template.com/",
+        "http://www.meizitu.com/",
     ]
 
     def parse(self, response):
@@ -37,7 +37,7 @@ class templateSpider(scrapy.Spider):
         
     def parse_detail(self, response):
         logging.info('content page: %s', response.url);  
-        item = templateItem()
+        item = meizituItem()
         item['pagelink'] = response.url
         item['title'] = response.xpath('//title/text()').extract()
         return item          
