@@ -13,19 +13,22 @@ DOWNLOADER_MIDDLEWARES = {
 }
 
 ITEM_PIPELINES = {
-   #'meizitu.pipelines.DoNothingPipeline': 300,
-  'meizitu.pipelines.ImageDownloadPipeline': 200,
-    'meizitu.pipelines.JsonWithEncodingPipeline': 300,
-   #'meizitu.pipelines.CsvPipeline': 300,  
-   #'meizitu.pipelines.MongoDBPipeline': 300,   
-   #'meizitu.pipelines.MySQLPipeline': 300,    
-   #'meizitu.pipelines.RedisPipeline': 300,
+   #'template.pipelines.DoNothingPipeline': 300,
+  'template.pipelines.ImageDownloadPipeline': 200,
+    'template.pipelines.JsonWithEncodingPipeline': 300,
+   #'template.pipelines.CsvPipeline': 300,  
+   #'template.pipelines.MongoDBPipeline': 300,   
+   #'template.pipelines.MySQLPipeline': 300,    
+   #'template.pipelines.RedisPipeline': 300,
 }
 
+#Log Info
 LOG_FILE = 'template.log'
 LOG_LEVEL = 'INFO'
 #LOG_LEVEL = 'DEBUG'
 
+#File Store 
 IMAGES_STORE = '/Users/zhoumaoen/data/images'
+
 DOWNLOAD_DELAY = 1
 DOWNLOAD_TIMEOUT = 10

@@ -19,18 +19,18 @@ class templateSpider(scrapy.Spider):
     def parse(self, response):
         logging.info('start page: %s', response.url)
         sel = Selector(response)
-        for link in sel.xpath('//div[@class="tags"]/span/a/@href').extract(): # 找到列表页的首页链接
+        for link in sel.xpath('//div[@class="tags"]/span/a/@href').extract(): # 找到列表页的首页链接 TODO: 改成从首页得到各个列表页的方法
             request = scrapy.Request(link, callback=self.parse_list)
             yield request
         
     def parse_list(self, response):
         logging.info('list page: %s', response.url)
         sel = Selector(response)
-        for link in sel.xpath('//div[@class="inWrap"]/ul/li/div/div/a/@href').extract(): # 找到具体的内容页链接
+        for link in sel.xpath('//div[@class="inWrap"]/ul/li/div/div/a/@href').extract(): # 找到具体的内容页链接 TODO: 改成从列表页得到内容页的方法
             request = scrapy.Request(link, callback=self.parse_detail)
             yield request
         
-        for link in sel.xpath('//div[@class="navigation"]/div[@id="wp_page_numbers"]/ul/li/a[contains(text(), "下一页")]/@href').extract(): # 找到列表页的下一页链接
+        for link in sel.xpath('//div[@class="navigation"]/div[@id="wp_page_numbers"]/ul/li/a[contains(text(), "下一页")]/@href').extract(): # 找到列表页的下一页链接 TODO: 改成从当前列表页得到下一页的方法
             request = scrapy.Request(link, callback=self.parse_list)
             yield request                
         
