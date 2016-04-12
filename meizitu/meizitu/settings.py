@@ -32,8 +32,8 @@ LOG_LEVEL = 'INFO'
 IMAGES_STORE = '/Users/zhoumaoen/data/images'
 
 #Redis Config 使用redis打开，不用redis请注释掉
-SCHEDULER = "scrapy_redis.scheduler.Scheduler"
-SCHEDULER_PERSIST = True
+#SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+#SCHEDULER_PERSIST = True
 
 DOWNLOAD_DELAY = 1
 DOWNLOAD_TIMEOUT = 10
