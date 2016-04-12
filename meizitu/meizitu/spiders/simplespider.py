@@ -3,7 +3,7 @@ import scrapy
 import logging
 
 from meizitu.items import *    #这个错误是eclipse自己的编译器错误
-from misc.xpathspider import baseXpathSpider
+from misc.xpathspider import BaseXpathSpider
 from misc.log import pp
 from scrapy.selector import Selector
 
@@ -11,7 +11,7 @@ from scrapy.selector import Selector
 # 1. 从主页得到所有列表页的首页链接
 # 2. 根据列表页的首页链接去得到下一页的链接，递归的遍历完整个列表页
 # 3. 在每个列表页中找到内容页的链接，然后去访问具体的内容页
-class meizituSpider(scrapy.Spider):
+class MeizituSpider(scrapy.Spider):
     name = "meizitu_base"
     allowed_domains = ["meizitu.com"]
     start_urls = [
@@ -37,7 +37,7 @@ class meizituSpider(scrapy.Spider):
             yield request                
            
     def parse_detail(self, response):
-        logging.info('content page: %s', response.url);  
+        logging.debug('content page: %s', response.url);  
         item = meizituItem()
         item['pagelink'] = response.url
         item['title'] = response.xpath('//title/text()').extract()
@@ -46,7 +46,7 @@ class meizituSpider(scrapy.Spider):
         return item   
     
 # 范例2，在范例1的基础上用item_rules来管理要存储的字段    
-class meizituXpathSpider(baseXpathSpider):
+class MeizituXpathSpider(BaseXpathSpider):
     name = "meizitu_xpath"
     allowed_domains = ["meizitu.com"]
     start_urls = [
@@ -85,7 +85,7 @@ class meizituXpathSpider(baseXpathSpider):
             yield request
             
     def parse_detail(self, response):
-        logging.info('content page: %s', response.url);  
-        item = self.parse_with_rules(response, self.item_rules, meizituItem)
-        pp.pprint(item)
-        return item
+        logging.debug('content page: %s', response.url);  
+        items = self.parse_with_rules(response, self.item_rules, meizituItem)
+        pp.pprint(items)
+        return items

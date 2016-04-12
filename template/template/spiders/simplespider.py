@@ -3,7 +3,7 @@ import scrapy
 import logging
 
 from template.items import *    #这个错误是eclipse自己的编译器错误
-from misc.xpathspider import baseXpathSpider
+from misc.xpathspider import BaseXpathSpider
 from misc.log import pp
 from scrapy.selector import Selector
 
@@ -37,7 +37,7 @@ class templateSpider(scrapy.Spider):
             yield request                
            
     def parse_detail(self, response):
-        logging.info('content page: %s', response.url);  
+        logging.debug('content page: %s', response.url);  
         item = templateItem()
         item['pagelink'] = response.url
         item['title'] = response.xpath('//title/text()').extract()
@@ -46,7 +46,7 @@ class templateSpider(scrapy.Spider):
         return item   
     
 # 范例2，在范例1的基础上用item_rules来管理要存储的字段    
-class meizituXpathSpider(baseXpathSpider):
+class templateXpathSpider(BaseXpathSpider):
     name = "template_xpath"
     allowed_domains = ["template.com"]
     start_urls = [
@@ -85,7 +85,7 @@ class meizituXpathSpider(baseXpathSpider):
             yield request
             
     def parse_detail(self, response):
-        logging.info('content page: %s', response.url);  
-        item = self.parse_with_rules(response, self.item_rules, meizituItem)
-        pp.pprint(item)
-        return item
+        logging.debug('content page: %s', response.url);  
+        items = self.parse_with_rules(response, self.item_rules, meizituItem)
+        pp.pprint(items)
+        return items

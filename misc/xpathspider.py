@@ -5,7 +5,7 @@ import re
 from scrapy.selector import Selector
 from scrapy.spiders import CrawlSpider
 
-class baseXpathSpider(scrapy.Spider):
+class BaseXpathSpider(scrapy.Spider):
     
     def extract_item(self, sels):
         contents = []

@@ -9,13 +9,8 @@ if __name__ =="__main__":
     #cmdline.execute("scrapy crawl meizitu_base -o meizitu.json".split())
     
     #2. 使用XpathSpider
-    cmdline.execute("scrapy crawl meizitu_xpath".split());
+    # cmdline.execute("scrapy crawl meizitu_xpath".split());
     
-    #3. 使用CssSpider
-    # cmdline.execute("scrapy crawl meizitu_css".split());
+    #3. 使用RedisSpider
+    cmdline.execute("scrapy crawl meizitu_redis".split());
     
-    #4. 使用RedisSpider
-    # cmdline.execute("scrapy crawl meizitu_redis".split());
-    
-    # cmdline.execute("scrapy crawl meizitu_redis".split())
-    # cmdline.execute("scrapy runspider meizitu.py -o meizitu.json".split());
