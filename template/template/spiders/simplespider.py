@@ -12,7 +12,7 @@ from scrapy.selector import Selector
 # 2. 根据列表页的首页链接去得到下一页的链接，递归的遍历完整个列表页
 # 3. 在每个列表页中找到内容页的链接，然后去访问具体的内容页
 class templateSpider(scrapy.Spider):
-    name = "template_v1"
+    name = "template_base"
     allowed_domains = ["template.com"]
     start_urls = [
         "http://www.template.com/",
@@ -47,7 +47,7 @@ class templateSpider(scrapy.Spider):
     
 # 范例2，在范例1的基础上用item_rules来管理要存储的字段    
 class meizituXpathSpider(baseXpathSpider):
-    name = "template_v2"
+    name = "template_xpath"
     allowed_domains = ["template.com"]
     start_urls = [
         "http://www.template.com/",
