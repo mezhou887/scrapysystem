@@ -7,7 +7,6 @@ from scrapy.item import Item, Field
 
 class cnbetaItem(Item):
     # define the fields for your item here like:
-    title = Field()
     pagelink = Field()
-    
+    title = Field()
 

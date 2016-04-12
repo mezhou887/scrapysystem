@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
-encoding//cnbeta/cnbeta/spiders/spider.py=utf-8
+encoding//cnbeta/cnbeta/settings.py=utf-8
+encoding//cnbeta/cnbeta/spiders/xpathspider.py=utf-8
 encoding//cnbeta/main.py=utf-8
 encoding//meizitu/main.py=utf-8
 encoding//meizitu/meizitu/settings.py=utf-8

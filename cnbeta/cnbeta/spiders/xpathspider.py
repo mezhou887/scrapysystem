@@ -3,42 +3,42 @@ import logging
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
-from template.items import *    #这个错误是eclipse自己的编译器错误，不用管
+from cnbeta.items import *    #这个错误是eclipse自己的编译器错误，不用管
 # from misc.log import pp
 from misc.xpathspider import XpathSpider
 from scrapy_redis.spiders import RedisMixin
 
 
 # 范例1，使用最基本的Spider来完成
-class templateSpider(CrawlSpider):
-    name = "template_base"
-    allowed_domains = ["template.com"]
+class cnbetaSpider(CrawlSpider):
+    name = "cnbeta_base"
+    allowed_domains = ["cnbeta.com"]
     start_urls = [
-        "http://www.template.com/",
+        "http://www.cnbeta.com/",
     ]
     
     rules = [
-        Rule(LinkExtractor(allow=("/articles/.*\.htm")), callback='parse_template', follow=True)
+        Rule(LinkExtractor(allow=("/articles/.*\.htm")), callback='parse_cnbeta', follow=True)
     ]
     
-    def parse_template(self, response):
+    def parse_cnbeta(self, response):
         logging.debug('content page: %s', response.url);  
-        item = templateItem()
+        item = cnbetaItem()
         item['pagelink'] = response.url
         item['title'] = response.xpath('//title/text()').extract()
         return item
     
 
-# 范例2，在范例1的基础上用item_rules来指明存储的字段 
-class templateXpathSpider(XpathSpider):
-    name = "template_xpath"
-    allowed_domains = ["template.com"]
+# 范例2，在范例1的基础上用item_rules来指明存储的字段
+class cnbetaXpathSpider(XpathSpider):
+    name = "cnbeta_xpath"
+    allowed_domains = ["cnbeta.com"]
     start_urls = [
-        "http://www.template.com/",
+        "http://www.cnbeta.com/",
     ]
     
     rules = [
-        Rule(LinkExtractor(allow=("/articles/.*\.htm")), callback='parse_template', follow=True)
+        Rule(LinkExtractor(allow=("/articles/.*\.htm")), callback='parse_cnbeta', follow=True)
     ]
 
     item_rules = { 
@@ -49,24 +49,24 @@ class templateXpathSpider(XpathSpider):
         }   
     }           
 
-    def parse_template(self, response):
+    def parse_cnbeta(self, response):
         logging.debug('content page: %s', response.url);  
         # pp.pprint(self.parse_with_rules(response, self.item_rules, dict)) 
-        item = self.parse_with_rules(response, self.item_rules, templateItem)
+        item = self.parse_with_rules(response, self.item_rules, cnbetaItem)
         # pp.pprint(item)
         return item
         
  
-# 范例3，在范例2的基础上加入Redis           
-class templateXpathRedisSpider(RedisMixin, XpathSpider):  
-    name = 'template_redis'
-    allowed_domains = ["template.com"]
+# 范例3，在范例2的基础上加入Redis          
+class cnbetaXpathRedisSpider(RedisMixin, XpathSpider):  
+    name = 'cnbeta_redis'
+    allowed_domains = ["cnbeta.com"]
     start_urls = [
-        "http://www.template.com/",
+        "http://www.cnbeta.com/",
     ]
     
     rules = [
-        Rule(LinkExtractor(allow=("/articles/.*\.htm")), callback='parse_template', follow=True)
+        Rule(LinkExtractor(allow=("/articles/.*\.htm")), callback='parse_cnbeta', follow=True)
     ]
 
     item_rules = { 
@@ -81,9 +81,9 @@ class templateXpathRedisSpider(RedisMixin, XpathSpider):
         XpathSpider._set_crawler(self, crawler)
         RedisMixin.setup_redis(self)
         
-    def parse_template(self, response):
+    def parse_cnbeta(self, response):
         logging.debug('content page: %s', response.url);  
         # pp.pprint(self.parse_with_rules(response, self.item_rules, dict))
-        item = self.parse_with_rules(response, self.item_rules, templateItem)
+        item = self.parse_with_rules(response, self.item_rules, cnbetaItem)
         # pp.pprint(item)
         return item 

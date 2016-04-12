@@ -41,15 +41,8 @@ class ImageDownloadPipeline(object):
     
     
 class DoNothingPipeline(object):
-    
-    def __init__(self):
-        pass
-    
     def process_item(self, item, spider):
         return item
-    
-    def spider_closed(self, spider):
-        pass
 
 
 class JsonWithEncodingPipeline(object):
@@ -67,58 +60,21 @@ class JsonWithEncodingPipeline(object):
 
 
 class MongoDBPipeline(object):
-    
-    def __init__(self):
-        pass
-    
     def process_item(self, item, spider):
         return item
-    
-    def spider_closed(self, spider):
-        pass
+
 
 class CsvPipeline(object):
-    
-    def __init__(self):
-        pass
-    
     def process_item(self, item, spider):
-        return item
-    
-    def spider_closed(self, spider):
-        pass    
-    
-class MySQLPipeline(object):
-    
-    def __init__(self):
-        pass
-    
-    def process_item(self, item, spider):
-        return item
-    
-    def spider_closed(self, spider):
-        pass     
-    
-class OraclePipeline(object):
-    
-    def __init__(self):
-        pass
-    
-    def process_item(self, item, spider):
-        return item
-    
-    def spider_closed(self, spider):
-        pass     
+        return item  
 
+    
+class MySQLPipeline(object): 
+    def process_item(self, item, spider):
+        return item     
+    
 
 class RedisPipeline(object):
-
-    def __init__(self):
-        pass
-    
     def process_item(self, item, spider):
         return item
-    
-    def spider_closed(self, spider):
-        pass   
         

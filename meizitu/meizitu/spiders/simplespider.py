@@ -4,7 +4,7 @@ import logging
 
 from meizitu.items import *    #这个错误是eclipse自己的编译器错误
 from misc.xpathspider import BaseXpathSpider
-from misc.log import pp
+# from misc.log import pp
 from scrapy.selector import Selector
 from scrapy_redis.spiders import RedisMixin
 
@@ -84,7 +84,7 @@ class MeizituXpathSpider(BaseXpathSpider):
     def parse_detail(self, response):
         logging.debug('content page: %s', response.url);  
         item = self.parse_with_rules(response, self.item_rules, meizituItem)
-        pp.pprint(item)
+        # pp.pprint(item)
         return item
     
 
@@ -131,5 +131,5 @@ class MeizituXpathRedisSpider(RedisMixin, BaseXpathSpider):
     def parse_detail(self, response):
         logging.debug('content page: %s', response.url);  
         item = self.parse_with_rules(response, self.item_rules, meizituItem)
-        pp.pprint(item)
+        # pp.pprint(item)
         return item
