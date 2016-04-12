@@ -25,14 +25,10 @@ class templateXpathSpider(XpathSpider):
             'title': 'text()',
             '__link': 'pagelink',
         }   
-    }     
-    
-    def __init__(self, *args, **kwargs):
-        super(templateXpathSpider, self).__init__(*args, **kwargs)
-        logging.debug('__init__')          
+    }           
 
     def parse_template(self, response):
-        logging.info('Parse '+response.url)
+        logging.debug('Parse '+response.url)
         # pp.pprint(self.parse_with_rules(response, self.item_rules, dict)) 
         item = self.parse_with_rules(response, self.item_rules, templateItem)
         pp.pprint(item)
@@ -56,18 +52,14 @@ class templateXpathRedisSpider(RedisMixin, XpathSpider):
             'title': 'text()',
             '__link': 'pagelink',
         }   
-    }        
-    
-    def __init__(self, *args, **kwargs):
-        super(templateXpathRedisSpider, self).__init__(*args, **kwargs)
-        logging.debug('__init__')            
+    }                 
     
     def _set_crawler(self, crawler):
-        CrawlSpider._set_crawler(self, crawler)
-        RedisMixin.setup_redis(self)
+        super(templateXpathRedisSpider, self)._set_crawler(crawler)
+        self.setup_redis()
         
     def parse_template(self, response):
-        logging.info('Parse '+response.url)
+        logging.debug('Parse '+response.url)
         # pp.pprint(self.parse_with_rules(response, self.item_rules, dict))
         item = self.parse_with_rules(response, self.item_rules, templateItem)
         pp.pprint(item)
