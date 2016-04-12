@@ -7,7 +7,7 @@ import json
 import codecs
 import os
 import requests
-from cnbeta import settings
+from cnbeta import settings  #这个错误是eclipse自己的编译器错误，不用管
 from collections import OrderedDict
 from cnbeta.items import *
 

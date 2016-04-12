@@ -7,7 +7,7 @@ import json
 import codecs
 import os
 import requests
-from meizitu import settings
+from meizitu import settings  #这个错误是eclipse自己的编译器错误，不用管
 from collections import OrderedDict
 from meizitu.items import *
 

@@ -7,7 +7,7 @@ import json
 import codecs
 import os
 import requests
-from template import settings
+from template import settings  #这个错误是eclipse自己的编译器错误，不用管
 from collections import OrderedDict
 from template.items import *
 
