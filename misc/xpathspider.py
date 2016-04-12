@@ -1,9 +1,55 @@
 #coding: utf-8
-
+import scrapy
 import re
 
 from scrapy.selector import Selector
 from scrapy.spiders import CrawlSpider
+
+class baseXpathSpider(scrapy.Spider):
+    
+    def extract_item(self, sels):
+        contents = []
+        for i in sels:
+            content = re.sub(r'\s+', ' ', i.extract())
+            if content != ' ':
+                contents.append(content)
+        return contents
+
+    def extract_items(self, sel, rules, pagelink, item):
+        for nk, nv in rules.items():
+            if nk in ('__link'):
+                item[nv] = pagelink
+                continue          
+            if nk in ('__use'):
+                continue
+            if nk not in item:
+                item[nk] = []
+            if sel.xpath(nv):
+                item[nk] += self.extract_item(sel.xpath(nv))
+            else:
+                item[nk] = []    
+    
+    def traversal(self, sel, rules, pagelink, item_class, item, items):
+        if item is None:
+            item = item_class()
+        if '__use' in rules:
+            self.extract_items(sel, rules, pagelink, item)
+            items.append(item)
+        else:
+            for nk, nv in rules.items():
+                for i in sel.xpath(nk):
+                    self.traversal(i, nv, pagelink, item_class, item, items)     
+    
+    
+    def parse_with_rules(self, response, rules, item_class):
+        sel = Selector(response)
+        if sel is None:
+            return []
+        
+        items = []
+        self.traversal(sel, rules, response.url, item_class, None, items) 
+        return items 
+    
 
 class XpathSpider(CrawlSpider):
 
