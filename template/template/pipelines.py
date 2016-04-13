@@ -59,22 +59,19 @@ class JsonWithEncodingPipeline(object):
         self.file.close()
 
 
-class MongoDBPipeline(object):
-    def process_item(self, item, spider):
-        return item
-
-
-class CsvPipeline(object):
-    def process_item(self, item, spider):
-        return item  
-
-    
+# pip install  pymysql   
+# http://www.w2bc.com/Article/44862
 class MySQLPipeline(object): 
+    
+    def __init__(self):
+        pass
+
+    @classmethod
+    def from_settings(cls, settings):
+        pass    
+        
     def process_item(self, item, spider):
         return item     
-    
-
-class RedisPipeline(object):
-    def process_item(self, item, spider):
-        return item
         
+    def do_insert(self, conn, item, spider):
+        pass

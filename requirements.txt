@@ -17,3 +17,4 @@ cssselect==0.9.1
 w3lib==1.13.0
 queuelib==1.4.2
 service-identity==16.0.0
+PyMySQL==0.7.2
