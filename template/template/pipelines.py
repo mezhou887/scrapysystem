@@ -7,9 +7,14 @@ import json
 import codecs
 import os
 import requests
+import logging
+from twisted.enterprise import adbapi
+from datetime import datetime
 from template import settings  #这个错误是eclipse自己的编译器错误，不用管
 from collections import OrderedDict
 from template.items import *
+import MySQLdb
+import MySQLdb.cursors
 
 
 class ImageDownloadPipeline(object):
@@ -59,19 +64,42 @@ class JsonWithEncodingPipeline(object):
         self.file.close()
 
 
-# pip install  pymysql   
-# http://www.w2bc.com/Article/44862
+# sudo ln -s /usr/local/mysql/bin/* /usr/bin
+# pip install MySQL-python    
+# sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib
+# sudo ln -s /usr/local/mysql/lib /usr/local/mysql/lib/mysql    
 class MySQLPipeline(object): 
     
-    def __init__(self):
-        pass
+    def __init__(self, dbpool):
+        self.dbpool = dbpool
 
     @classmethod
     def from_settings(cls, settings):
-        pass    
+        dbargs = dict(
+            host=settings['MYSQL_HOST'],
+            db=settings['MYSQL_DBNAME'],
+            user=settings['MYSQL_USER'],
+            passwd=settings['MYSQL_PASSWD'],
+            charset='utf8',
+            cursorclass = MySQLdb.cursors.DictCursor,
+            use_unicode= True,
+        )
+        dbpool = adbapi.ConnectionPool('MySQLdb', **dbargs)
+        return cls(dbpool)  
         
     def process_item(self, item, spider):
-        return item     
+        d = self.dbpool.runInteraction(self._do_insert, item, spider)
+        d.addErrback(self._handle_error, item, spider)
+        d.addBoth(lambda _: item)
+        return d   
         
-    def do_insert(self, conn, item, spider):
-        pass
+    def _do_insert(self, conn, item, spider):
+        sql = "insert into TABLENAME() values(%s, %s, %s, %s)"
+        now = datetime.utcnow().replace(microsecond=0).isoformat(' ')
+        ret = conn.fetchone()
+        if ret:
+            conn.execute(sql, (item['AAAA'], item['BBB'], item['CCCC'], item['DDDD'], now))
+        print now
+        
+    def _handle_error(self, failure, item, spider):
+        logging.error(failure)    

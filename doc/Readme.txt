@@ -54,4 +54,11 @@
 	
 8. 爬虫链接
 	http://python.jobbole.com/84772/
+	
+9. 安装MySQL-python
+	参考: # http://blog.csdn.net/janronehoo/article/details/25207825
+	sudo ln -s /usr/local/mysql/bin/* /usr/bin
+	pip install MySQL-python	
+	sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib
+	sudo ln -s /usr/local/mysql/lib /usr/local/mysql/lib/mysql	
 		
