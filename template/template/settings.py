@@ -18,9 +18,9 @@ ITEM_PIPELINES = {
     'template.pipelines.DoNothingPipeline': 100,
     'template.pipelines.ImageDownloadPipeline': 200,
     'template.pipelines.JsonWithEncodingPipeline': 300,
-    'template.pipelines.MySQLPipeline': 400,    
-    'scrapy_redis.pipelines.RedisPipeline': 500,   
-    'scrapy_mongodb.MongoDBPipeline': 600,
+    'template.mysql_pipeline.MySQLPipeline': 400,    
+    'template.redis_pipeline.RedisPipeline': 500,   
+    'template.mongodb_pipline.MongoDBPipeline': 600,
 }
 
 #Log Info
