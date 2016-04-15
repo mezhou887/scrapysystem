@@ -6,11 +6,10 @@ Created on 2016年4月8日
 '''
 import unittest
 from test.xpathtest import TestXpathFunctions
-from test.csstest import TestCssFunctions
 from test.regextest import TestRegexFunctions
 
 def suite_use_test_loader():
-    test_cases = (TestXpathFunctions, TestCssFunctions, TestRegexFunctions)
+    test_cases = (TestXpathFunctions, TestRegexFunctions)
     suite = unittest.TestSuite()
     for test_case in test_cases:
         tests = unittest.defaultTestLoader.loadTestsFromTestCase(test_case)
