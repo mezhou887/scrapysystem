@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+import pprint
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
@@ -7,6 +8,7 @@ from template.items import *    #这个错误是eclipse自己的编译器错误�
 # from misc.log import pp
 from misc.xpathspider import XpathSpider
 from scrapy_redis.spiders import RedisMixin
+from bs4 import BeautifulSoup
 
 
 # 范例1，使用最基本的Spider来完成
@@ -83,7 +85,10 @@ class templateXpathRedisSpider(RedisMixin, XpathSpider):
         
     def parse_template(self, response):
         logging.debug('content page: %s', response.url);  
+        soup = BeautifulSoup(response.body, "lxml")
+        logging.debug(soup.prettify())
         # pp.pprint(self.parse_with_rules(response, self.item_rules, dict))
         item = self.parse_with_rules(response, self.item_rules, templateItem)
         # pp.pprint(item)
+        pprint.pprint(item)        
         return item 

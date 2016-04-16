@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import logging
+import pprint
 
 from template.items import *    #这个错误是eclipse自己的编译器错误
 from misc.xpathspider import BaseXpathSpider
 # from misc.log import pp
 from scrapy.selector import Selector
 from scrapy_redis.spiders import RedisMixin
+from bs4 import BeautifulSoup
 
 # 范例1，使用最基本的Spider来完成
 # 1. 从主页得到所有列表页的首页链接
@@ -115,6 +117,8 @@ class templateXpathRedisSpider(RedisMixin, BaseXpathSpider):
         
     def parse(self, response):
         logging.debug('start page: %s', response.url)
+        soup = BeautifulSoup(response.body, "lxml")
+        logging.debug(soup.prettify())
         sel = Selector(response)
         for link in sel.xpath('//div[@class="tags"]/span/a/@href').extract(): # 找到列表页的首页链接
             yield scrapy.Request(link, callback=self.parse_list)
@@ -132,4 +136,5 @@ class templateXpathRedisSpider(RedisMixin, BaseXpathSpider):
         logging.debug('content page: %s', response.url);  
         item = self.parse_with_rules(response, self.item_rules, meizituItem)
         # pp.pprint(item)
+        pprint.pprint(item)
         return item

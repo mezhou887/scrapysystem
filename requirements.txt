@@ -13,10 +13,11 @@ pip install scrapy-redis
 pip install scrapy-mongodb
 pip install MySQL-python
 pip install Pillow
-
-brew install libtiff libjpeg webp little-cms2
-
-
-
+pip install shellpy
+pip install virtual
+pip install virtualenvwrapper
+pip install python-json-logger
 
 pip freeze 
+
+brew install libtiff libjpeg webp little-cms2

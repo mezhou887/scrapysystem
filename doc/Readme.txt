@@ -61,4 +61,7 @@
 	pip install MySQL-python	
 	sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib
 	sudo ln -s /usr/local/mysql/lib /usr/local/mysql/lib/mysql	
+	
+10. python virtualenv沙盒环境的使用
+	http://www.cnblogs.com/tk091/p/3700013.html
 		

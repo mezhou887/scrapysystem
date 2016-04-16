@@ -1,4 +1,7 @@
 eclipse.preferences.version=1
+encoding//cnbeta/cnbeta/file_pipeline.py=utf-8
+encoding//cnbeta/cnbeta/mysql_pipeline.py=utf-8
+encoding//cnbeta/cnbeta/redis_pipeline.py=utf-8
 encoding//cnbeta/cnbeta/settings.py=utf-8
 encoding//cnbeta/cnbeta/spiders/xpathspider.py=utf-8
 encoding//cnbeta/main.py=utf-8
@@ -9,6 +12,7 @@ encoding//meizitu/meizitu/redis_pipeline.py=utf-8
 encoding//meizitu/meizitu/settings.py=utf-8
 encoding//meizitu/meizitu/spiders/simplespider.py=utf-8
 encoding//meizitu/scrapyd.py=utf-8
+encoding//misc/log.py=utf-8
 encoding//misc/xpathspider.py=utf-8
 encoding//template/main.py=utf-8
 encoding//template/scrapyd.py=utf-8
