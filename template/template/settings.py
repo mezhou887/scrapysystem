@@ -15,12 +15,13 @@ DOWNLOADER_MIDDLEWARES = {
 }
 
 ITEM_PIPELINES = {
-    'template.pipelines.DoNothingPipeline': 100,
-    'template.pipelines.ImageDownloadPipeline': 200,
-    'template.pipelines.JsonWithEncodingPipeline': 300,
-    'template.mysql_pipeline.MySQLPipeline': 400,    
-    'template.redis_pipeline.RedisPipeline': 500,   
-    'template.mongodb_pipline.MongoDBPipeline': 600,
+    'template.file_pipeline.DoNothingPipeline': 100,
+    'scrapy.pipelines.images.ImagesPipeline': 200,
+    'template.file_pipeline.JsonPipeline': 300,
+    'template.file_pipeline.CsvPipeline': 400,
+    'template.mysql_pipeline.MySQLPipeline': 500,    
+    'template.redis_pipeline.RedisPipeline': 600,   
+    'scrapy_mongodb.MongoDBPipeline': 700,
 }
 
 #Log Info
@@ -30,6 +31,11 @@ LOG_LEVEL = 'INFO'
 
 #Image Store 
 IMAGES_STORE = os.path.join(PROJECT_DIR,'data/images')
+IMAGES_EXPIRES = 30
+IMAGES_THUMBS = {
+    'small': (50, 50),
+    'big': (270, 270),
+}
 
 #Redis Config 使用redis打开，不用redis请注释掉
 # https://github.com/rolando/scrapy-redis
@@ -38,7 +44,7 @@ SCHEDULER_PERSIST = True
 SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderPriorityQueue'
 
 # Mongodb Config
-# https://github.com/sebdah/scrapy-mongodb
+# http://sebdah.github.io/scrapy-mongodb/
 MONGODB_URI = 'mongodb://localhost:27017'
 MONGODB_DATABASE = 'scrapy'
 MONGODB_COLLECTION = 'template_mongo'

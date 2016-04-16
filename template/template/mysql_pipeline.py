@@ -4,12 +4,6 @@ import MySQLdb
 from datetime import datetime
 from twisted.internet.threads import deferToThread
 
-# Default values.
-MYSQL_HOST = 'localhost'
-MYSQL_DBNAME = 'scrapy'
-MYSQL_USER = 'mezhou887'
-MYSQL_PASSWD = '123456'
-
 # pip install MySQL-python       
 class MySQLPipeline(object): 
     
@@ -21,10 +15,10 @@ class MySQLPipeline(object):
 
     @classmethod
     def from_settings(cls, settings):
-        host = settings.get('MYSQL_HOST',  MYSQL_HOST)
-        db = settings.get('MYSQL_DBNAME', MYSQL_DBNAME)
-        user = settings.get('MYSQL_USER', MYSQL_USER)
-        passwd = settings.get('MYSQL_PASSWD', MYSQL_PASSWD)
+        host = settings.get('MYSQL_HOST',  'localhost')
+        db = settings.get('MYSQL_DBNAME', 'scrapy')
+        user = settings.get('MYSQL_USER', 'mezhou887')
+        passwd = settings.get('MYSQL_PASSWD', 'mezhou887')
         
         conn = MySQLdb.connect(host, user, passwd, db, charset='utf8', use_unicode=False)
         return cls(conn);
