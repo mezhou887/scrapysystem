@@ -5,7 +5,7 @@ from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
 from template.items import *    #这个错误是eclipse自己的编译器错误，不用管
-# from misc.log import pp
+from misc.log import pp
 from misc.xpathspider import XpathSpider
 from scrapy_redis.spiders import RedisMixin
 from bs4 import BeautifulSoup
@@ -55,7 +55,7 @@ class templateXpathSpider(XpathSpider):
         logging.debug('content page: %s', response.url);  
         # pp.pprint(self.parse_with_rules(response, self.item_rules, dict)) 
         item = self.parse_with_rules(response, self.item_rules, templateItem)
-        # pp.pprint(item)
+        pp.pprint(item)
         return item
         
  

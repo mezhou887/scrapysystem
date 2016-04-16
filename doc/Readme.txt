@@ -64,4 +64,9 @@
 	
 10. python virtualenv沙盒环境的使用
 	http://www.cnblogs.com/tk091/p/3700013.html
+	
+11. crontab的问题
+	crontab: "/usr/bin/vi" exited with status 1
+	执行以下命令: export EDITOR=vim
+	
 		
