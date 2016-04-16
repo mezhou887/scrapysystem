@@ -10,7 +10,7 @@ from scrapy_redis.spiders import RedisMixin
 
 
 # 范例1，使用最基本的Spider来完成
-class cnbetaSpider(CrawlSpider):
+class CnbetaSpider(CrawlSpider):
     name = "cnbeta_base"
     allowed_domains = ["cnbeta.com"]
     start_urls = [
@@ -30,7 +30,7 @@ class cnbetaSpider(CrawlSpider):
     
 
 # 范例2，在范例1的基础上用item_rules来指明存储的字段
-class cnbetaXpathSpider(XpathSpider):
+class CnbetaXpathSpider(XpathSpider):
     name = "cnbeta_xpath"
     allowed_domains = ["cnbeta.com"]
     start_urls = [
@@ -58,7 +58,7 @@ class cnbetaXpathSpider(XpathSpider):
         
  
 # 范例3，在范例2的基础上加入Redis          
-class cnbetaXpathRedisSpider(RedisMixin, XpathSpider):  
+class CnbetaXpathRedisSpider(RedisMixin, XpathSpider):  
     name = 'cnbeta_redis'
     allowed_domains = ["cnbeta.com"]
     start_urls = [
