@@ -3,7 +3,7 @@
 import json
 import codecs
 from collections import OrderedDict
-from template.items import *
+from meizitu.items import *
   
     
 class DoNothingPipeline(object):
@@ -14,7 +14,7 @@ class DoNothingPipeline(object):
 class JsonPipeline(object):
 
     def __init__(self):
-        self.file = codecs.open('template.json', 'w', encoding='utf-8')
+        self.file = codecs.open('meizitu.json', 'w', encoding='utf-8')
 
     def process_item(self, item, spider):
         line = json.dumps(OrderedDict(item), ensure_ascii=False, sort_keys=False) + "\n"

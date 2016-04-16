@@ -3,10 +3,10 @@ import os
 
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 
-BOT_NAME = 'template'
+BOT_NAME = 'meizitu'
 
-SPIDER_MODULES = ['template.spiders']
-NEWSPIDER_MODULE = 'template.spiders'
+SPIDER_MODULES = ['meizitu.spiders']
+NEWSPIDER_MODULE = 'meizitu.spiders'
 
 DOWNLOADER_MIDDLEWARES = {
    # 'misc.middleware.CustomHttpProxyMiddleware': 100,
@@ -15,16 +15,16 @@ DOWNLOADER_MIDDLEWARES = {
 }
 
 ITEM_PIPELINES = {
-    'template.file_pipeline.DoNothingPipeline': 100,
+    'meizitu.file_pipeline.DoNothingPipeline': 100,
     'scrapy.pipelines.images.ImagesPipeline': 200,
-    'template.file_pipeline.JsonPipeline': 300,
-    #'template.mysql_pipeline.MySQLPipeline': 400,    
-    #'template.redis_pipeline.RedisPipeline': 500,   
+    'meizitu.file_pipeline.JsonPipeline': 300,
+    #'meizitu.mysql_pipeline.MySQLPipeline': 400,    
+    #'meizitu.redis_pipeline.RedisPipeline': 500,   
     #'scrapy_mongodb.MongoDBPipeline': 600,
 }
 
 #Log Info
-LOG_FILE = 'template.log'
+LOG_FILE = 'meizitu.log'
 LOG_LEVEL = 'INFO'
 #LOG_LEVEL = 'DEBUG'
 
@@ -46,7 +46,7 @@ SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderPriorityQueue'
 # http://sebdah.github.io/scrapy-mongodb/
 MONGODB_URI = 'mongodb://localhost:27017'
 MONGODB_DATABASE = 'scrapy'
-MONGODB_COLLECTION = 'template_mongo'
+MONGODB_COLLECTION = 'meizitu_mongo'
 
 #MySQL Config
 MYSQL_HOST = 'localhost'
