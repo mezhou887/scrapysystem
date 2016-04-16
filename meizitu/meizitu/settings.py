@@ -18,7 +18,7 @@ ITEM_PIPELINES = {
     'meizitu.file_pipeline.DoNothingPipeline': 100,
     'scrapy.pipelines.images.ImagesPipeline': 200,
     'meizitu.file_pipeline.JsonPipeline': 300,
-    #'meizitu.mysql_pipeline.MySQLPipeline': 400,    
+    'meizitu.mysql_pipeline.MySQLPipeline': 400,    
     #'meizitu.redis_pipeline.RedisPipeline': 500,   
     #'scrapy_mongodb.MongoDBPipeline': 600,
 }
@@ -52,7 +52,7 @@ MONGODB_COLLECTION = 'meizitu_mongo'
 MYSQL_HOST = 'localhost'
 MYSQL_DBNAME = 'scrapy'
 MYSQL_USER = 'mezhou887'
-MYSQL_PASSWD = '123456'
+MYSQL_PASSWD = 'mezhou887'
 
 DOWNLOAD_DELAY = 1
 DOWNLOAD_TIMEOUT = 10
