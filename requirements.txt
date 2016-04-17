@@ -11,7 +11,7 @@ pip install scrapyd
 pip install scrapyd-client
 pip install scrapy-redis
 pip install scrapy-mongodb
-pip install MySQL-python
+pip install mysql-connector-python
 pip install Pillow
 pip install shellpy
 pip install virtualenv

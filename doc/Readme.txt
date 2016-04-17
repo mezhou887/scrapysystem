@@ -55,12 +55,8 @@
 8. 爬虫链接
 	http://python.jobbole.com/84772/
 	
-9. 安装MySQL-python
-	参考: # http://blog.csdn.net/janronehoo/article/details/25207825
-	sudo ln -s /usr/local/mysql/bin/* /usr/bin
-	pip install MySQL-python	
-	sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib
-	sudo ln -s /usr/local/mysql/lib /usr/local/mysql/lib/mysql	
+9. 安装mysql-connector-python
+	pip install mysql-connector-python	
 	
 10. python virtualenv沙盒环境的使用
 	http://www.cnblogs.com/tk091/p/3700013.html
@@ -74,5 +70,8 @@
 	
 13. phantomjs 2.1.1 下载地址
 	http://pan.baidu.com/s/1bEnD5G  gqsy
+	
+14. 加入异常处理和md5
+	http://www.w2bc.com/Article/44862
 	
 		

@@ -1,26 +1,29 @@
 # -*- coding: utf-8 -*-
 import logging
-import MySQLdb
+import mysql.connector
 from datetime import datetime
 from twisted.internet.threads import deferToThread
 
-# pip install MySQL-python       
+# conn test: mysql -u root -p   或者 mysql -u mezhou887 -pmezhou887
+
+# pip install mysql-connector-python       
 class MySQLPipeline(object): 
     
     def __init__(self, conn):
         self.conn = conn
         self.cur = conn.cursor()
         self.process_query = "insert into TABLENAME(AAAA, BBBB, CCCC, DDDD, now) values(%s, %s, %s, %s);"
-        self.test_query = "select count(1) from TABLENAME;"
 
     @classmethod
     def from_settings(cls, settings):
-        host = settings.get('MYSQL_HOST',  'localhost')
-        db = settings.get('MYSQL_DBNAME', 'scrapy')
-        user = settings.get('MYSQL_USER', 'mezhou887')
-        passwd = settings.get('MYSQL_PASSWD', 'mezhou887')
-        
-        conn = MySQLdb.connect(host, user, passwd, db, charset='utf8', use_unicode=False)
+        config={'host':settings.get('MYSQL_HOST',  'localhost'),  
+                'user':settings.get('MYSQL_USER', 'mezhou887'),  
+                'password':settings.get('MYSQL_PASSWD', 'mezhou887'),  
+                'port':3306,
+                'database':settings.get('MYSQL_DBNAME', 'scrapy'),  
+                'charset':'utf8' 
+        }
+        conn = mysql.connector.connect(**config)
         return cls(conn);
     
     def process_item(self, item, spider):
@@ -31,3 +34,7 @@ class MySQLPipeline(object):
         logging.debug(self.process_query + now)  
         self.cur.execute(self.process_query, (item['AAAA'], item['BBB'], item['CCCC'], item['DDDD'], now))
         self.conn.commit()        
+
+    def spider_closed(self, spider):
+        self.cur.close()
+        self.conn.close()
