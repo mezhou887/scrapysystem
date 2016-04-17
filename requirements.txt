@@ -14,7 +14,7 @@ pip install scrapy-mongodb
 pip install MySQL-python
 pip install Pillow
 pip install shellpy
-pip install virtual
+pip install virtualenv
 pip install virtualenvwrapper
 pip install python-json-logger
 
