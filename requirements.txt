@@ -16,7 +16,7 @@ pip install Pillow
 pip install shellpy
 pip install virtualenv
 pip install virtualenvwrapper
-pip install python-json-logger
+pip install jsonpipe
 
 pip freeze 
 

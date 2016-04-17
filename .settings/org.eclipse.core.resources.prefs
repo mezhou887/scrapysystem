@@ -22,6 +22,7 @@ encoding//template/template/redis_pipeline.py=utf-8
 encoding//template/template/settings.py=utf-8
 encoding//template/template/spiders/simplespider.py=utf-8
 encoding//template/template/spiders/xpathspider.py=utf-8
+encoding//test/loggertest.py=utf-8
 encoding//test/regextest.py=utf-8
 encoding//test/testsuite.py=utf-8
 encoding//test/xpathtest.py=utf-8
