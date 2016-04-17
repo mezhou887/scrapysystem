@@ -72,4 +72,7 @@
 12. Beautiful Soup 4.2.0中文文档
 	https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/
 	
+13. phantomjs 2.1.1 下载地址
+	http://pan.baidu.com/s/1bEnD5G  gqsy
+	
 		
