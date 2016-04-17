@@ -62,7 +62,7 @@ EXTENSIONS = {
 STATSMAILER_RCPTS = ['mezhou887@foxmail.com']
 
 #发件人
-MAIL_FROM = 'scrapysystem@qq.com'
+MAIL_FROM = '1033738034@qq.com'
 MAIL_HOST = 'smtp.qq.com'
 MAIL_PORT = 465
 MAIL_TLS = True
