@@ -8,9 +8,10 @@ import unittest
 from test.xpathtest import TestXpathFunctions
 from test.regextest import TestRegexFunctions
 from test.loggertest import TestLoggerFunctions
+from test.loggertest import TestMailFunctions
 
 def suite_use_test_loader():
-    test_cases = (TestXpathFunctions, TestLoggerFunctions, TestRegexFunctions)
+    test_cases = (TestXpathFunctions, TestLoggerFunctions, TestMailFunctions, TestRegexFunctions)
     suite = unittest.TestSuite()
     for test_case in test_cases:
         tests = unittest.defaultTestLoader.loadTestsFromTestCase(test_case)

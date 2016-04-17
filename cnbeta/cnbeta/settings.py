@@ -38,9 +38,9 @@ IMAGES_THUMBS = {
 
 #Redis Config 使用redis打开，不用redis请注释掉
 # https://github.com/rolando/scrapy-redis
-SCHEDULER = "scrapy_redis.scheduler.Scheduler"
-SCHEDULER_PERSIST = True
-SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderPriorityQueue'
+# SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+# SCHEDULER_PERSIST = True
+# SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderPriorityQueue'
 
 # Mongodb Config
 # http://sebdah.github.io/scrapy-mongodb/
@@ -53,6 +53,24 @@ MYSQL_HOST = 'localhost'
 MYSQL_DBNAME = 'scrapy'
 MYSQL_USER = 'mezhou887'
 MYSQL_PASSWD = 'mezhou887'
+
+#Email Config
+EXTENSIONS = {
+    'scrapy.extensions.statsmailer.StatsMailer': 500,
+}
+#收件人
+STATSMAILER_RCPTS = ['mezhou887@foxmail.com']
+
+#发件人
+MAIL_FROM = 'scrapysystem@qq.com'
+MAIL_HOST = 'smtp.qq.com'
+MAIL_PORT = 465
+MAIL_TLS = True
+MAIL_SSL = True
+#邮箱用户
+MAIL_USER = '1033738034@qq.com'
+#邮箱密码
+MAIL_PASS = 'ghyftlmoejsgbeai'
 
 DOWNLOAD_DELAY = 1
 DOWNLOAD_TIMEOUT = 10

@@ -69,4 +69,7 @@
 	crontab: "/usr/bin/vi" exited with status 1
 	执行以下命令: export EDITOR=vim
 	
+12. Beautiful Soup 4.2.0中文文档
+	https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/
+	
 		
