@@ -58,6 +58,17 @@ MYSQL_PASSWD = 'mezhou887'
 EXTENSIONS = {
     'scrapy.extensions.statsmailer.StatsMailer': 500,
 }
+
+#Item Exporters
+FEED_EXPORTERS_BASE = {
+    'json': 'scrapy.exporters.JsonItemExporter',
+    'jsonlines': 'scrapy.exporters.JsonLinesItemExporter',
+    'csv': 'scrapy.exporters.CsvItemExporter',
+    'xml': 'scrapy.exporters.XmlItemExporter',
+    'marshal': 'scrapy.exporters.MarshalItemExporter',
+}
+
+
 #收件人
 STATSMAILER_RCPTS = ['mezhou887@foxmail.com']
 
