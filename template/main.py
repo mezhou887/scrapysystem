@@ -14,4 +14,4 @@ if __name__ =="__main__":
     cmdline.execute("scrapy crawl template_redis".split());
     
     #4. 持久化一个爬虫，使它能暂停/继续爬取
-    cmdline.execute("scrapy crawl template_base -s JOBDIR=crawls/templatespider-1".split());
+    #cmdline.execute("scrapy crawl template_base -s JOBDIR=crawls/templatespider-1".split());
