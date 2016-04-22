@@ -11,7 +11,6 @@ pip install scrapyd
 pip install scrapyd-client
 pip install scrapy-redis
 pip install scrapy-mongodb
-pip install mysql-connector-python
 pip install Pillow
 pip install shellpy
 pip install virtualenv
@@ -20,5 +19,7 @@ pip install jsonpipe
 pip install selenium
 
 pip freeze 
+
+apt-get install jq
 
 brew install libtiff libjpeg webp little-cms2
