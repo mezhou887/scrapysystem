@@ -19,7 +19,7 @@ ITEM_PIPELINES = {
     'scrapy.pipelines.images.ImagesPipeline': 200,
     'meizitu.file_pipeline.JsonPipeline': 300,
     'meizitu.mysql_pipeline.MySQLPipeline': 400,    
-    #'meizitu.redis_pipeline.RedisPipeline': 500,   
+    #'scrapy_redis.pipelines.RedisPipeline': 500,   
     #'scrapy_mongodb.MongoDBPipeline': 600,
 }
 

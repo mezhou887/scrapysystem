@@ -19,7 +19,7 @@ ITEM_PIPELINES = {
     'scrapy.pipelines.images.ImagesPipeline': 200,
     'cnbeta.file_pipeline.JsonPipeline': 300,
     #'cnbeta.mysql_pipeline.MySQLPipeline': 400,    
-    #'cnbeta.redis_pipeline.RedisPipeline': 500,   
+    #'scrapy_redis.pipelines.RedisPipeline': 500,   
     #'scrapy_mongodb.MongoDBPipeline': 600,
 }
 

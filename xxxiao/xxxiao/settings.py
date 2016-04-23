@@ -12,7 +12,7 @@ ITEM_PIPELINES = {
     'xxxiao.file_pipeline.DoNothingPipeline': 100,
     'scrapy.pipelines.images.ImagesPipeline': 200,
     'xxxiao.file_pipeline.JsonPipeline': 300,
-    'xxxiao.redis_pipeline.RedisPipeline': 500,   
+    'scrapy_redis.pipelines.RedisPipeline': 500,   
 }
 
 # Log Info
