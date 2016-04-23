@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+# cat xxxiao.json | jq '.[] | {message: .title, name: .pagelink}'
 import os
 
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
