@@ -74,4 +74,9 @@
 14. 加入异常处理和md5
 	http://www.w2bc.com/Article/44862
 	
+15. json转换成其他格式
+	https://github.com/micha/jsawk (curl -L http://github.com/micha/jsawk/raw/master/jsawk > jsawk  chmod 777 jsawk && mv jsawk /bin/)
+	https://stedolan.github.io/jq/ (apt-get install jq)
+	
+	
 		
