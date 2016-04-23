@@ -23,10 +23,10 @@ ITEM_PIPELINES = {
     #'scrapy_mongodb.MongoDBPipeline': 600,
 }
 
-#Log Info
+# Log Info
 LOG_FILE = 'xxxiao.log'
-LOG_LEVEL = 'INFO'
-#LOG_LEVEL = 'DEBUG'
+# LOG_LEVEL = 'INFO'
+LOG_LEVEL = 'DEBUG'
 
 #Image Store 
 IMAGES_STORE = os.path.join(PROJECT_DIR,'data/images')
@@ -38,9 +38,9 @@ IMAGES_THUMBS = {
 
 #Redis Config 使用redis打开，不用redis请注释掉
 # https://github.com/rolando/scrapy-redis
-SCHEDULER = "scrapy_redis.scheduler.Scheduler"
-SCHEDULER_PERSIST = True
-SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderPriorityQueue'
+# SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+# SCHEDULER_PERSIST = True
+#SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderPriorityQueue'
 
 # Mongodb Config
 # http://sebdah.github.io/scrapy-mongodb/
