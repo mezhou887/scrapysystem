@@ -24,14 +24,15 @@ IMAGES_STORE = os.path.join(PROJECT_DIR,'data/images')
 IMAGES_EXPIRES = 30
 IMAGES_THUMBS = {
     'small': (50, 50),
+    'mid': (160, 160),
     'big': (270, 270),
 }
 
 #Redis Config 使用redis打开，不用redis请注释掉
 # https://github.com/rolando/scrapy-redis
-SCHEDULER = "scrapy_redis.scheduler.Scheduler"
-SCHEDULER_PERSIST = True
-SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderPriorityQueue'
+# SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+# SCHEDULER_PERSIST = True
+# SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderPriorityQueue'
 
 #Email Config
 EXTENSIONS = {
