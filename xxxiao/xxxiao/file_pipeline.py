@@ -8,6 +8,7 @@ from xxxiao.items import *
     
 class DoNothingPipeline(object):
     def process_item(self, item, spider):
+        print 'DoNothing'
         return item
         
 
