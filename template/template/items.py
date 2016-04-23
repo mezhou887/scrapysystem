@@ -12,4 +12,6 @@ class templateItem(Item):
     name = Field()
     image_urls = Field()
     images = Field()
+#     file_urls = Field()
+#     files = Field()    
 

@@ -44,6 +44,7 @@ class templateSpider(scrapy.Spider):
         item['title'] = response.xpath('//title/text()').extract()
         item['name'] = response.xpath('//h2/a/text()').extract()
         item['image_urls'] = response.xpath('//div[@id="picture"]/p/img/@src').extract()
+#        item['file_urls'] = response.xpath('//div[@id="picture"]/p/img/@src').extract()
         return item   
     
     
@@ -64,7 +65,8 @@ class templateXpathSpider(BaseXpathSpider):
         '//body': {
             '__use': 'dump', 
             'name': '//h2/a/text()',
-            'image_urls': '//div[@id="picture"]/p/img/@src'                             
+            'image_urls': '//div[@id="picture"]/p/img/@src',                           
+#            'file_urls': '//div[@id="picture"]/p/img/@src'                             
         }             
     }
     
@@ -106,7 +108,8 @@ class templateXpathRedisSpider(RedisMixin, BaseXpathSpider):
         '//body': {
             '__use': 'dump', 
             'name': '//h2/a/text()',
-            'image_urls': '//div[@id="picture"]/p/img/@src'                             
+            'image_urls': '//div[@id="picture"]/p/img/@src',                             
+#            'file_urls': '//div[@id="picture"]/p/img/@src'                             
         }             
     }         
         

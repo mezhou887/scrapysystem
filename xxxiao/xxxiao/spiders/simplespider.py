@@ -41,4 +41,5 @@ class XxxiaoSpider(scrapy.Spider):
         item['pagelink'] = response.url
         item['title'] = response.xpath('//title/text()').extract()
         item['image_urls'] = response.xpath(xxxiaoConfig.detail_page_rule2).extract()
+#         item['file_urls'] = response.xpath(xxxiaoConfig.detail_page_rule2).extract()
         return item   

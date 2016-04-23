@@ -12,17 +12,18 @@ NEWSPIDER_MODULE = 'xxxiao.spiders'
 ITEM_PIPELINES = {
     'xxxiao.file_pipeline.DoNothingPipeline': 100,
     'scrapy.pipelines.images.ImagesPipeline': 200,
+#    'scrapy.pipelines.files.FilesPipeline': 200,
     'xxxiao.file_pipeline.JsonPipeline': 300,
     'scrapy_mongodb.MongoDBPipeline': 600,
 }
 
 
-#Log配置信息
+# Log配置信息
 LOG_FILE = 'xxxiao.log'
 LOG_LEVEL = 'INFO' #'DEBUG'
 
 
-#图片存储信息
+# 图片存储信息
 IMAGES_STORE = os.path.join(PROJECT_DIR,'data/images')
 IMAGES_EXPIRES = 30
 IMAGES_THUMBS = {
@@ -30,6 +31,13 @@ IMAGES_THUMBS = {
     'middle': (160, 160),
     'big': (270, 270),
 }
+IMAGES_MIN_HEIGHT = 10
+IMAGES_MIN_WIDTH = 10
+
+
+# 文件存储信息 由于文件和图片都是存储到full路径下的，所以没必要保留多个
+#FILES_STORE = os.path.join(PROJECT_DIR,'data/files')
+#FILES_EXPIRES = 30
 
 
 # Mongodb配置信息
