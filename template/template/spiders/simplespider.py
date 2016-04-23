@@ -3,7 +3,8 @@ import scrapy
 import logging
 import pprint
 
-from template.items import *    #这个错误是eclipse自己的编译器错误
+from template.items import templateItem    #这个错误是eclipse自己的编译器错误
+from template.config import templateConfig #这个错误是eclipse自己的编译器错误
 from misc.xpathspider import BaseXpathSpider
 from misc.log import pp
 from scrapy.selector import Selector
@@ -22,19 +23,18 @@ class templateSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        logging.debug('start page: %s', response.url)
         sel = Selector(response)
-        for link in sel.xpath('//div[@class="tags"]/span/a/@href').extract(): # 找到列表页的首页链接
+        for link in sel.xpath(templateConfig.list_page_rule1).extract(): # 找到列表页的首页链接
             request = scrapy.Request(link, callback=self.parse_list)
             yield request
         
     def parse_list(self, response):
-        logging.debug('list page: %s', response.url)
+        logging.info('list page: %s', response.url)
         sel = Selector(response)
-        for link in sel.xpath('//div[@class="inWrap"]/ul/li/div/div/a/@href').extract(): # 找到具体的内容页链接
+        for link in sel.xpath(templateConfig.detail_page_rule1).extract(): # 找到具体的内容页链接
             yield scrapy.Request(link, callback=self.parse_detail)
         
-        for link in sel.xpath('//div[@class="navigation"]/div[@id="wp_page_numbers"]/ul/li/a[contains(text(), "下一页")]/@href').extract(): # 找到列表页的下一页链接
+        for link in sel.xpath(templateConfig.list_page_rule2).extract(): # 找到列表页的下一页链接
             yield scrapy.Request(link, callback=self.parse_list)                
            
     def parse_detail(self, response):
@@ -69,18 +69,17 @@ class templateXpathSpider(BaseXpathSpider):
     }
     
     def parse(self, response):
-        logging.debug('start page: %s', response.url)
         sel = Selector(response)
-        for link in sel.xpath('//div[@class="tags"]/span/a/@href').extract(): # 找到列表页的首页链接
+        for link in sel.xpath(templateConfig.list_page_rule1).extract(): # 找到列表页的首页链接
             yield scrapy.Request(link, callback=self.parse_list)
         
     def parse_list(self, response):
-        logging.debug('list page: %s', response.url)
+        logging.info('list page: %s', response.url)
         sel = Selector(response)
-        for link in sel.xpath('//div[@class="inWrap"]/ul/li/div/div/a/@href').extract(): # 找到具体的内容页链接
+        for link in sel.xpath(templateConfig.detail_page_rule1).extract(): # 找到具体的内容页链接
             yield scrapy.Request(link, callback=self.parse_detail)
         
-        for link in sel.xpath('//div[@class="navigation"]/div[@id="wp_page_numbers"]/ul/li/a[contains(text(), "下一页")]/@href').extract(): # 找到列表页的下一页链接
+        for link in sel.xpath(templateConfig.list_page_rule2).extract(): # 找到列表页的下一页链接
             yield scrapy.Request(link, callback=self.parse_list)
             
     def parse_detail(self, response):
@@ -116,20 +115,19 @@ class templateXpathRedisSpider(RedisMixin, BaseXpathSpider):
         self.setup_redis()            
         
     def parse(self, response):
-        logging.debug('start page: %s', response.url)
         soup = BeautifulSoup(response.body, "lxml")
         logging.debug(soup.prettify())
         sel = Selector(response)
-        for link in sel.xpath('//div[@class="tags"]/span/a/@href').extract(): # 找到列表页的首页链接
+        for link in sel.xpath(templateConfig.list_page_rule1).extract(): # 找到列表页的首页链接
             yield scrapy.Request(link, callback=self.parse_list)
         
     def parse_list(self, response):
-        logging.debug('list page: %s', response.url)
+        logging.info('list page: %s', response.url)
         sel = Selector(response)
-        for link in sel.xpath('//div[@class="inWrap"]/ul/li/div/div/a/@href').extract(): # 找到具体的内容页链接
+        for link in sel.xpath(templateConfig.detail_page_rule1).extract(): # 找到具体的内容页链接
             yield scrapy.Request(link, callback=self.parse_detail)
         
-        for link in sel.xpath('//div[@class="navigation"]/div[@id="wp_page_numbers"]/ul/li/a[contains(text(), "下一页")]/@href').extract(): # 找到列表页的下一页链接
+        for link in sel.xpath(templateConfig.list_page_rule2).extract(): # 找到列表页的下一页链接
             yield scrapy.Request(link, callback=self.parse_list)
             
     def parse_detail(self, response):

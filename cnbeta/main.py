@@ -12,3 +12,6 @@ if __name__ =="__main__":
     
     #3. 使用RedisSpider
     # cmdline.execute("scrapy crawl cnbeta_redis".split());
+    
+    #4. 持久化一个爬虫，使它能暂停/继续爬取
+    #cmdline.execute("scrapy crawl template_base -s JOBDIR=crawls/cnbetaspider-1".split());    
