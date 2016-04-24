@@ -1,37 +1,14 @@
-from proxy import HTTPPROXIES, HTTPSPROXIES
+from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
 from agents import AGENTS
-import logging as log
 
 import random
 
-class CustomHttpProxyMiddleware(object):
+class CustomUserAgentMiddleware(UserAgentMiddleware):
 
     def process_request(self, request, spider):
-        if self.use_proxy(request):
-            p = random.choice(HTTPPROXIES)
-            try:
-                request.meta['proxy'] = "http://%s" % p['ip_port']
-            except Exception, e:
-                log.critical("Exception %s" % e)
-
-    def use_proxy(self, request):
-        return True
-
-class CustomHttpsProxyMiddleware(object):
-
-    def process_request(self, request, spider):
-        if self.use_proxy(request):
-            p = random.choice(HTTPSPROXIES)
-            try:
-                request.meta['proxy'] = "http://%s" % p['ip_port']
-            except Exception, e:
-                log.critical("Exception %s" % e)
-
-    def use_proxy(self, request):
-        return True
-
-
-class CustomUserAgentMiddleware(object):
-    def process_request(self, request, spider):
-        agent = random.choice(AGENTS)
-        request.headers['User-Agent'] = agent
+        if self.user_agent:
+            request.headers.setdefault('User-Agent', self.user_agent)
+        else:
+            agent = random.choice(AGENTS)
+            request.headers.setdefault('User-Agent', agent)
+                

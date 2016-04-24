@@ -37,10 +37,12 @@ class MySQLPipeline(object):
         if ret:
             logging.debug(self.process_query + now)  
             self.conn.execute(self.process_query, (linkmd5id, item['AAAA'], item['BBB'], item['CCCC'], item['DDDD'], now))
-            self.conn.commit() 
-        
+        else:
+            logging.debug("the item is already install." + now)  
+            
     def _get_linkmd5id(self, item):         
         return md5(item['pagelink']).hexdigest()           
 
     def spider_closed(self, spider):
+        self.conn.commit() 
         self.conn.close()
