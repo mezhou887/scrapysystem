@@ -9,31 +9,13 @@ BOT_NAME = 'xxxiao'
 SPIDER_MODULES = ['xxxiao.spiders']
 NEWSPIDER_MODULE = 'xxxiao.spiders'
 
-# 系统内置的下载中间件
-# DOWNLOADER_MIDDLEWARES_BASE = {
-#     'scrapy.downloadermiddlewares.robotstxt.RobotsTxtMiddleware': 100,
-#     'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware': 300,
-#     'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware': 350,
-#     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': 400,
-#     'scrapy.downloadermiddlewares.retry.RetryMiddleware': 500,
-#     'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware': 550,
-#     'scrapy.downloadermiddlewares.ajaxcrawl.AjaxCrawlMiddleware': 560,
-#     'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware': 580,
-#     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 590,
-#     'scrapy.downloadermiddlewares.redirect.RedirectMiddleware': 600,
-#     'scrapy.downloadermiddlewares.cookies.CookiesMiddleware': 700,
-#     'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 750,
-#     'scrapy.downloadermiddlewares.chunked.ChunkedTransferMiddleware': 830,
-#     'scrapy.downloadermiddlewares.stats.DownloaderStats': 850,
-#     'scrapy.downloadermiddlewares.httpcache.HttpCacheMiddleware': 900,
-# }
-
 
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.cookies.CookiesMiddleware': None, # 禁用cookies
-    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None, #禁用系统内置的User-Agent
-    'misc.middleware.CustomUserAgentMiddleware': 300, # 用我自己的User-Agent
+     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None, #禁用系统内置的User-Agent
+     'misc.middleware.CustomUserAgentMiddleware': 300, # 用我自己的User-Agent，随机取一个值
 }
+
 
 ITEM_PIPELINES = {
     'xxxiao.file_pipeline.DoNothingPipeline': 100,
