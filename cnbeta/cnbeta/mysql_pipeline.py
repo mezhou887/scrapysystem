@@ -2,7 +2,7 @@
 import logging
 import mysql.connector
 from datetime import datetime
-from twisted.internet.threads import deferToThread
+from hashlib import md5
 
 # conn test: mysql -u root -p   或者 mysql -u mezhou887 -pmezhou887
 
@@ -12,7 +12,7 @@ class MySQLPipeline(object):
     def __init__(self, conn):
         self.conn = conn
         self.cur = conn.cursor()
-        self.process_query = "insert into TABLENAME(AAAA, BBBB, CCCC, DDDD, now) values(%s, %s, %s, %s);"
+        self.process_query = "insert into cnbeta(linkmd5id, pagelink, title, now) values(%s, %s, %s, %s);"
 
     @classmethod
     def from_settings(cls, settings):
@@ -27,13 +27,14 @@ class MySQLPipeline(object):
         return cls(conn);
     
     def process_item(self, item, spider):
-        return deferToThread(self._process_item, item, spider)
-        
-    def _process_item(self, item, spider):  
         now = datetime.utcnow().replace(microsecond=0).isoformat(' ')
+        linkmd5id = self._get_linkmd5id(item)
         logging.debug(self.process_query + now)  
-        self.cur.execute(self.process_query, (item['AAAA'], item['BBB'], item['CCCC'], item['DDDD'], now))
-        self.conn.commit()        
+        self.cur.execute(self.process_query, (linkmd5id, item['pagelink'], item['title'][0], now))
+        self.conn.commit()
+            
+    def _get_linkmd5id(self, item):         
+        return md5(item['pagelink']).hexdigest()           
 
     def spider_closed(self, spider):
         self.cur.close()
