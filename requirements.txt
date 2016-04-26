@@ -8,6 +8,7 @@ pip install BloomFilter
 pip install redis
 pip install requests
 pip install scrapyd
+pip install scrapylib
 pip install scrapyd-client
 pip install scrapy-redis
 pip install scrapy-mongodb
