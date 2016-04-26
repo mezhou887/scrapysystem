@@ -78,5 +78,14 @@
 	https://github.com/micha/jsawk (curl -L http://github.com/micha/jsawk/raw/master/jsawk > jsawk  chmod 777 jsawk && mv jsawk /bin/)
 	https://stedolan.github.io/jq/ (apt-get install jq)
 	
+16. 参考链接
+	http://www.cnblogs.com/Bright-Star/p/4163107.html?utm_source=tuicool&utm_medium=referral
+	http://blog.chedushi.com/archives/6488
+	http://www.xuebuyuan.com/1252477.html
+	http://www.zhihu.com/question/19793879
+	http://stackoverflow.com/questions/12553117/how-to-filter-duplicate-requests-based-on-url-in-scrapy
+	https://github.com/mezhou887/scrapy-cluster
+	https://github.com/mezhou887/scrapylib
+	
 	
 		
