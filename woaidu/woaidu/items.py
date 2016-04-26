@@ -7,9 +7,8 @@ from scrapy.item import Item, Field
 
 class woaiduItem(Item):
     # define the fields for your item here like:
-    pagelink = Field()
-    title = Field()
-    name = Field()
-    image_urls = Field()
-    images = Field()
-
+    book_name = Field()
+    author = Field()
+    book_description = Field()
+    book_covor_image_url = Field()
+    original_url = Field()

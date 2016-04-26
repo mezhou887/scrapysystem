@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import logging
-import pprint
 
 from woaidu.items import *    #这个错误是eclipse自己的编译器错误
-from misc.xpathspider import BaseXpathSpider
-from misc.log import pp
 from scrapy.selector import Selector
-from scrapy_redis.spiders import RedisMixin
-from bs4 import BeautifulSoup
+from scrapy.http import Request
+from misc.utils import list_first_item,clean_url
 
 # 范例1，使用最基本的Spider来完成
 # 1. 从主页得到所有列表页的首页链接
@@ -16,124 +13,34 @@ from bs4 import BeautifulSoup
 # 3. 在每个列表页中找到内容页的链接，然后去访问具体的内容页
 class WoaiduSpider(scrapy.Spider):
     name = "woaidu_base"
-    allowed_domains = ["woaidu.com"]
+    allowed_domains = ["woaidu.org"]
     start_urls = [
-        "http://www.woaidu.com/",
+        "http://www.woaidu.org/sitemap_1.html",
     ]
 
     def parse(self, response):
-        logging.debug('start page: %s', response.url)
+        logging.info('list page: %s', response.url)
         sel = Selector(response)
-        for link in sel.xpath('//div[@class="tags"]/span/a/@href').extract(): # 找到列表页的首页链接
-            request = scrapy.Request(link, callback=self.parse_list)
-            yield request
-        
-    def parse_list(self, response):
-        logging.debug('list page: %s', response.url)
-        sel = Selector(response)
-        for link in sel.xpath('//div[@class="inWrap"]/ul/li/div/div/a/@href').extract(): # 找到具体的内容页链接
-            yield scrapy.Request(link, callback=self.parse_detail)
-        
-        for link in sel.xpath('//div[@class="navigation"]/div[@id="wp_page_numbers"]/ul/li/a[contains(text(), "下一页")]/@href').extract(): # 找到列表页的下一页链接
-            yield scrapy.Request(link, callback=self.parse_list)                
-           
+        next_text = u'下一页'
+        next_link = list_first_item(sel.xpath('//div[@class="k2"]/div/a[text()="'+next_text+'"]/@href').extract())
+        print next_link
+        if next_link:
+            next_link = clean_url(response.url,next_link,response.encoding)
+            yield Request(url=next_link, callback=self.parse)
+
+        for detail_link in sel.xpath('//div[contains(@class,"sousuolist")]/a/@href').extract():
+            if detail_link:
+                detail_link = clean_url(response.url,detail_link,response.encoding)
+                yield Request(url=detail_link, callback=self.parse_detail)  
+                      
     def parse_detail(self, response):
-        logging.debug('content page: %s', response.url);  
         item = woaiduItem()
-        item['pagelink'] = response.url
-        item['title'] = response.xpath('//title/text()').extract()
-        item['name'] = response.xpath('//h2/a/text()').extract()
-        item['image_urls'] = response.xpath('//div[@id="picture"]/p/img/@src').extract()
+        
+        sel = Selector(response)
+        item['book_name'] = list_first_item(sel.xpath('//div[@class="zizida"][1]/text()').extract())
+        item['author'] = [list_first_item(sel.xpath('//div[@class="xiaoxiao"][1]/text()').extract())[5:].strip(),]
+        item['book_description'] = list_first_item(sel.xpath('//div[@class="lili"][1]/text()').extract()).strip()
+        item['book_covor_image_url'] = list_first_item(sel.xpath('//div[@class="hong"][1]/img/@src').extract())
+        item['original_url'] = response.url                
         return item   
     
-    
-# 范例2，在范例1的基础上用item_rules来指明存储的字段    
-class WoaiduXpathSpider(BaseXpathSpider):
-    name = "woaidu_xpath"
-    allowed_domains = ["woaidu.com"]
-    start_urls = [
-        "http://www.woaidu.com/",
-    ]
-    
-    item_rules = { 
-        '//title': {
-            '__use': 'dump',                    
-            'title': 'text()',
-            '__link': 'pagelink'
-        },
-        '//body': {
-            '__use': 'dump', 
-            'name': '//h2/a/text()',
-            'image_urls': '//div[@id="picture"]/p/img/@src'                             
-        }             
-    }
-    
-    def parse(self, response):
-        logging.debug('start page: %s', response.url)
-        sel = Selector(response)
-        for link in sel.xpath('//div[@class="tags"]/span/a/@href').extract(): # 找到列表页的首页链接
-            yield scrapy.Request(link, callback=self.parse_list)
-        
-    def parse_list(self, response):
-        logging.debug('list page: %s', response.url)
-        sel = Selector(response)
-        for link in sel.xpath('//div[@class="inWrap"]/ul/li/div/div/a/@href').extract(): # 找到具体的内容页链接
-            yield scrapy.Request(link, callback=self.parse_detail)
-        
-        for link in sel.xpath('//div[@class="navigation"]/div[@id="wp_page_numbers"]/ul/li/a[contains(text(), "下一页")]/@href').extract(): # 找到列表页的下一页链接
-            yield scrapy.Request(link, callback=self.parse_list)
-            
-    def parse_detail(self, response):
-        logging.debug('content page: %s', response.url);  
-        item = self.parse_with_rules(response, self.item_rules, meizituItem)
-        pp.pprint(item)
-        return item
-    
-
-# 范例3，在范例2的基础上加入Redis      
-class WoaiduXpathRedisSpider(RedisMixin, BaseXpathSpider):
-    name = "woaidu_redis"
-    allowed_domains = ["woaidu.com"]
-    start_urls = [
-        "http://www.woaidu.com/",
-    ]
-    
-    item_rules = { 
-        '//title': {
-            '__use': 'dump',                    
-            'title': 'text()',
-            '__link': 'pagelink'
-        },
-        '//body': {
-            '__use': 'dump', 
-            'name': '//h2/a/text()',
-            'image_urls': '//div[@id="picture"]/p/img/@src'                             
-        }             
-    }         
-        
-    def _set_crawler(self, crawler):
-        super(woaiduXpathRedisSpider, self)._set_crawler(crawler)
-        self.setup_redis()            
-        
-    def parse(self, response):
-        logging.debug('start page: %s', response.url)
-        soup = BeautifulSoup(response.body, "lxml")
-        logging.debug(soup.prettify())
-        sel = Selector(response)
-        for link in sel.xpath('//div[@class="tags"]/span/a/@href').extract(): # 找到列表页的首页链接
-            yield scrapy.Request(link, callback=self.parse_list)
-        
-    def parse_list(self, response):
-        logging.debug('list page: %s', response.url)
-        sel = Selector(response)
-        for link in sel.xpath('//div[@class="inWrap"]/ul/li/div/div/a/@href').extract(): # 找到具体的内容页链接
-            yield scrapy.Request(link, callback=self.parse_detail)
-        
-        for link in sel.xpath('//div[@class="navigation"]/div[@id="wp_page_numbers"]/ul/li/a[contains(text(), "下一页")]/@href').extract(): # 找到列表页的下一页链接
-            yield scrapy.Request(link, callback=self.parse_list)
-            
-    def parse_detail(self, response):
-        logging.debug('content page: %s', response.url);  
-        item = self.parse_with_rules(response, self.item_rules, meizituItem)
-        pprint.pprint(item)
-        return item
