@@ -23,3 +23,17 @@ class JsonPipeline(object):
 
     def spider_closed(self, spider):
         self.file.close()
+
+
+class ProxyPipeline(object):
+
+    def __init__(self):
+        self.file = codecs.open('proxypipeline.txt', 'w', encoding='utf-8')
+
+    def process_item(self, item, spider):
+        line = item['ip'][0] + ": " + item['port'][0] + "\n"
+        self.file.write(line)
+        return item
+
+    def spider_closed(self, spider):
+        self.file.close()
