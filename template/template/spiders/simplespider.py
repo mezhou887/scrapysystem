@@ -24,18 +24,18 @@ class templateSpider(scrapy.Spider):
 
     def parse(self, response):
         sel = Selector(response)
-        for link in sel.xpath(templateConfig.list_page_rule1).extract(): # 找到列表页的首页链接
-            request = scrapy.Request(link, callback=self.parse_list)
+        for list_link in sel.xpath(templateConfig.list_page_rule1).extract(): # 找到列表页的首页链接
+            request = scrapy.Request(list_link, callback=self.parse_list)
             yield request
         
     def parse_list(self, response):
         logging.info('list page: %s', response.url)
         sel = Selector(response)
-        for link in sel.xpath(templateConfig.detail_page_rule1).extract(): # 找到具体的内容页链接
-            yield scrapy.Request(link, callback=self.parse_detail)
+        for detail_link in sel.xpath(templateConfig.detail_page_rule1).extract(): # 找到具体的内容页链接
+            yield scrapy.Request(detail_link, callback=self.parse_detail)
         
-        for link in sel.xpath(templateConfig.list_page_rule2).extract(): # 找到列表页的下一页链接
-            yield scrapy.Request(link, callback=self.parse_list)                
+        for list_link in sel.xpath(templateConfig.list_page_rule2).extract(): # 找到列表页的下一页链接
+            yield scrapy.Request(list_link, callback=self.parse_list)                
            
     def parse_detail(self, response):
         logging.debug('content page: %s', response.url);  
@@ -72,17 +72,17 @@ class templateXpathSpider(BaseXpathSpider):
     
     def parse(self, response):
         sel = Selector(response)
-        for link in sel.xpath(templateConfig.list_page_rule1).extract(): # 找到列表页的首页链接
-            yield scrapy.Request(link, callback=self.parse_list)
+        for list_link in sel.xpath(templateConfig.list_page_rule1).extract(): # 找到列表页的首页链接
+            yield scrapy.Request(list_link, callback=self.parse_list)
         
     def parse_list(self, response):
         logging.info('list page: %s', response.url)
         sel = Selector(response)
-        for link in sel.xpath(templateConfig.detail_page_rule1).extract(): # 找到具体的内容页链接
-            yield scrapy.Request(link, callback=self.parse_detail)
+        for detail_link in sel.xpath(templateConfig.detail_page_rule1).extract(): # 找到具体的内容页链接
+            yield scrapy.Request(detail_link, callback=self.parse_detail)
         
-        for link in sel.xpath(templateConfig.list_page_rule2).extract(): # 找到列表页的下一页链接
-            yield scrapy.Request(link, callback=self.parse_list)
+        for list_link in sel.xpath(templateConfig.list_page_rule2).extract(): # 找到列表页的下一页链接
+            yield scrapy.Request(list_link, callback=self.parse_list)
             
     def parse_detail(self, response):
         logging.debug('content page: %s', response.url);  
@@ -121,17 +121,17 @@ class templateXpathRedisSpider(RedisMixin, BaseXpathSpider):
         soup = BeautifulSoup(response.body, "lxml")
         logging.debug(soup.prettify())
         sel = Selector(response)
-        for link in sel.xpath(templateConfig.list_page_rule1).extract(): # 找到列表页的首页链接
-            yield scrapy.Request(link, callback=self.parse_list)
+        for list_link in sel.xpath(templateConfig.list_page_rule1).extract(): # 找到列表页的首页链接
+            yield scrapy.Request(list_link, callback=self.parse_list)
         
     def parse_list(self, response):
         logging.info('list page: %s', response.url)
         sel = Selector(response)
-        for link in sel.xpath(templateConfig.detail_page_rule1).extract(): # 找到具体的内容页链接
-            yield scrapy.Request(link, callback=self.parse_detail)
+        for detail_link in sel.xpath(templateConfig.detail_page_rule1).extract(): # 找到具体的内容页链接
+            yield scrapy.Request(detail_link, callback=self.parse_detail)
         
-        for link in sel.xpath(templateConfig.list_page_rule2).extract(): # 找到列表页的下一页链接
-            yield scrapy.Request(link, callback=self.parse_list)
+        for list_link in sel.xpath(templateConfig.list_page_rule2).extract(): # 找到列表页的下一页链接
+            yield scrapy.Request(list_link, callback=self.parse_list)
             
     def parse_detail(self, response):
         logging.debug('content page: %s', response.url);  
