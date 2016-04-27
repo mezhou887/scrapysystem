@@ -4,6 +4,9 @@ Created on 2016年4月27日
 
 @author: 周茂恩
 '''
+# link1: http://blog.javachen.com/2014/06/08/using-scrapy-to-cralw-zhihu.html
+
+
 from scrapy.selector import Selector
 from scrapy.spiders.crawl import CrawlSpider
 from scrapy.http import Request,FormRequest
