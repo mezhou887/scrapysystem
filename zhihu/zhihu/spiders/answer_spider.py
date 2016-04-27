@@ -11,7 +11,7 @@ from zhihu.items import *
 
 host='http://www.zhihu.com'
 
-class ZhihuLoginSpider(CrawlSpider):
+class ZhihuAnswerSpider(CrawlSpider):
     name = 'zhihu_answer'
     allowed_domains = ['zhihu.com']
     start_urls = []
