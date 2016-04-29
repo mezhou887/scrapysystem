@@ -17,6 +17,7 @@ from zhihu.settings import HEADER, COOKIES
 from zhihu.items import *
 
 import json
+import urlparse
 
 host = 'http://www.zhihu.com'
 home = 'http://www.zhihu.com/people/raymond-wang/about'
@@ -37,6 +38,25 @@ class ZhihuUserSpider(CrawlSpider):
                 headers = self.headers,
                 cookies = self.cookies,
                 callback = self.parse_item)
+
+    def parse_item(self, response):
+        sel = Selector(response)
+        typeinfo = response.url.split('/')[-1]
+         
+        if typeinfo.startswith('about'):
+            self.parse_about(response, sel)
+        
+        elif typeinfo.startswith('followees') or typeinfo.startswith('ProfileFolloweesListV2'):
+            self.parse_followees(response, sel)
+
+        elif typeinfo.startswith('followers') or typeinfo.startswith('ProfileFollowersListV2'):
+            self.parse_followers(response, sel)
+            
+        elif typeinfo.startswith('answers'):
+            self.parse_answers(response, sel)
+            
+        elif typeinfo.startswith('asks'):
+            self.parse_asks(response, sel)
     
     def parse_about(self, response, sel):
         try:
@@ -167,7 +187,7 @@ class ZhihuUserSpider(CrawlSpider):
                 yield Request(link+'/about', headers = headers, cookies=self.cookies)
 
             username=urlparse.parse_qs(urlparse.urlparse(response.url).query,True)['username'][0]
-            yield ZhihuFolloweesItem(_id=username,username = username,followees = followees)
+            yield ZhihuFolloweesItem(_id=username, username=username, followees=followees)
         except Exception, e:
             open('error_pages/followees_' + response.url.split('/')[-2]+'.html', 'w').write(response.body)
             print '='*10 + str(e)
@@ -190,7 +210,7 @@ class ZhihuUserSpider(CrawlSpider):
 
             username = response.url.split('/')[-2]
             # 保存到文件时，没有合并
-            #yield ZhihuFollowersItem(_id=username,username = username,followers = followers)
+            yield ZhihuFollowersItem(_id=username, username=username, followers=followers)
         except Exception, e:
             open('error_pages/followers_' + response.url.split('/')[-2]+'.html', 'w').write(response.body)
             print '='*10 + str(e)
@@ -198,23 +218,24 @@ class ZhihuUserSpider(CrawlSpider):
     def parse_answers(self, response, sel):
         username = response.url.split('/')[-2]
         try:
-            for record in sel.xpath(r"id('zh-profile-answer-list')/div"):
-                ask_title = ''.join(record.xpath(r"h2/a/text()").extract())
-                url = host + ''.join(record.xpath("h2/a/@href").extract()) # answer_url
+            for record in sel.xpath('//div[@id="zh-profile-answer-list"]/div'):
+                
+                ask_title = ''.join(record.xpath('/h2/a/text()').extract())
+                url = host + ''.join(record.xpath('/h2/a/@href').extract()) # answer_url
                 ask_url = url.split('/answer')[0]
 
-                agree_num = ''.join(record.xpath('div/div[2]/a/text()').extract())
-                summary = ''.join(record.xpath(r"div/div[4]/div/text()").extract()).replace("\n","").strip()  #TODO
-                content = ''.join(record.xpath(r"div/div[4]/textarea/text()").extract()).replace("\n","").strip()
+                agree_num = ''.join(record.xpath('/div/div[2]/a/text()').extract())
+                summary = ''.join(record.xpath('/div/div[4]/div/text()').extract()).replace('\n','').strip()
+                content = ''.join(record.xpath('/div/div[4]/textarea/text()').extract()).replace('\n','').strip()
 
-                comment_num = record.xpath(r"div/div[5]/div/a[2]/text()")[1].extract() #'添加评论'或者'3 条评论'
+                comment_num = record.xpath('/div/div[5]/div/a[2]/text()')[1].extract() #'添加评论'或者'3 条评论'
                 comment_num = comment_num.split(' ')[0] #取数字
                 if comment_num.startswith(u'添加评论'):
                     comment_num = '0'
 
                 yield ZhihuAnswerItem(_id=url,username = username,url = url, ask_title = ask_title, \
-                                      ask_url = ask_url, agree_num = agree_num, summary = summary
-                                      , content = content, comment_num = comment_num)
+                                      ask_url = ask_url, agree_num = agree_num, summary = summary, \
+                                      content = content, comment_num = comment_num)
         except Exception, e:
             open('error_pages/answers_' + response.url.split('/')[-2]+'.html', 'w').write(response.body)
             print '='*10 + str(e)
@@ -222,34 +243,17 @@ class ZhihuUserSpider(CrawlSpider):
     def parse_asks(self, response, sel):
         username = response.url.split('/')[-2]
         try:
-            for record in sel.xpath(r"id('zh-profile-ask-list')/div"):
-                view_num = record.xpath(r'span/div[1]/text()')[0].extract()
-                title = record.xpath(r"div/h2/a/text()")[0].extract()
-                answer_num = record.xpath(r"div/div/span[1]/following-sibling::text()")[0].extract().split(' ')[0].replace('\n','')
-                follower_num = record.xpath(r"div/div/span[2]/following-sibling::text()")[0].extract().split(' ')[0].replace('\n','')
-                url = host+record.xpath(r"div/h2/a/@href")[0].extract()
+            for record in sel.xpath('//div[@id="zh-profile-ask-list"]/div'):
+                
+                view_num = record.xpath('/span/div[1]/text()')[0].extract()
+                title = record.xpath('/div/h2/a/text()')[0].extract()
+                answer_num = record.xpath('/div/div/span[1]/following-sibling::text()')[0].extract().split(' ')[0].replace('\n','').strip() #取数字
+                follower_num = record.xpath('/div/div/span[2]/following-sibling::text()')[0].extract().split(' ')[0].replace('\n','').strip() #取数字
+                url = host+record.xpath('/div/h2/a/@href')[0].extract()
 
-                yield ZhihuAskItem(_id=url,username = username,url = url, view_num = view_num, title = title, answer_num = answer_num, follower_num = follower_num)
+                yield ZhihuAskItem(_id=url,username = username,url = url, view_num = view_num, \
+                                   title = title, answer_num = answer_num, follower_num = follower_num)
         except Exception, e:
             open('error_pages/asks' + response.url.split('/')[-2]+'.html', 'w').write(response.body)
             print '='*10 + str(e)
-
         
-    def parse_item(self, response):
-        sel = Selector(response)
-        typeinfo = response.url.split('/')[-1]
-         
-        if typeinfo.startswith('about'):
-            self.parse_about(response, sel)
-        
-        elif typeinfo.startswith('followees') or typeinfo.startswith('ProfileFolloweesListV2'):
-            self.parse_followees(response, sel)
-
-        elif typeinfo.startswith('followers') or typeinfo.startswith('ProfileFollowersListV2'):
-            self.parse_followers(response, sel)
-            
-        elif typeinfo.startswith('answers'):
-            self.parse_answers(response, sel)
-            
-        elif typeinfo.startswith('asks'):
-            self.parse_asks(response, sel)
