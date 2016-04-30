@@ -9,6 +9,7 @@ from selenium import webdriver
 import time
 
 def getcookies(url, next_url):
+    
     driver = webdriver.Firefox()
     driver.get(url)
     
@@ -21,19 +22,16 @@ def getcookies(url, next_url):
     
     time.sleep(10) # 休眠10s钟，等待用户输入验证码
     
-    
     # 勾选保存密码， 点击登录按钮
     driver.find_element_by_name("remember_me").click()
     driver.find_element_by_xpath('//button[@class="sign-button submit"]').click()
     time.sleep(5)
     driver.get(next_url)
 
-    
-    cookie = [item["name"] + "=" + item["value"] for item in driver.get_cookies()]
-    print cookie
-    
-    cookiestr = ';'.join(item for item in cookie)
-    print cookiestr
+    print 'COOKIES = {'
+    for item in driver.get_cookies():
+        print "    '"+item["name"]+"': r'"+item["value"]+"',"  
+    print '}'
     
     time.sleep(2)
     driver.close()
