@@ -49,7 +49,7 @@ class ZhihuUserSpider(CrawlSpider):
                 user['_id']=user['username']=response.url.split('/')[-2]
                 user['url']= response.url
                 user['nickname'] = ''.join(sel.xpath('//div[@class="title-section ellipsis"]/a[@class="name"]/text()').extract())
-                user['location'] = ''.join(sel.xpath('/span[@class="location item"]/@title').extract())
+                user['location'] = ''.join(sel.xpath('//span[@class="location item"]/@title').extract())
                 user['industry'] = ''.join(sel.xpath('//span[@class="business item"]/@title').extract())
                 user['sex'] = ''.join(sel.xpath('//div[@class="item editable-group"]/span/span[@class="item"]/i/@class').extract()).replace("zg-icon gender ","")
                 user['description'] = ''.join(sel.xpath('//span[@class="description unfold-item"]/span/text()').extract()).strip().replace("\n",'')
@@ -57,10 +57,10 @@ class ZhihuUserSpider(CrawlSpider):
                 user['update_time'] = str(datetime.now())
     
                 user['jobs'] = []
-                job_nodes = sel.xpath('//div[@class="zm-profile-module zg-clear"][1]/div/ul[@class="zm-profile-details-items"]/li')
+                job_nodes = sel.xpath('//div[@class="zm-profile-module zg-clear"][1]/div')
                 for node in job_nodes:
-                    company = ''.join(node.xpath('@data-title').extract())
-                    title = ''.join(node.xpath('@data-sub-title').extract())
+                    company = ''.join(node.xpath('//div[@class="ProfileItem-text ProfileItem-text--bold"]/a/text()').extract())
+                    title = ''.join(node.xpath('//div[@class="ProfileItem-text ProfileItem-text--bold"]/span[2]/text()').extract())
                     user['jobs'].append({'company': company, 'title':title})
     
                 user['educations'] = []
