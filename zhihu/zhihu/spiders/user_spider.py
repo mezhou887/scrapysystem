@@ -46,63 +46,72 @@ class ZhihuUserSpider(CrawlSpider):
         if typeinfo.startswith('about'):
             try:
                 user = ZhihuUserItem()
+                
                 user['_id']=user['username']=response.url.split('/')[-2]
                 user['url']= response.url
+                _xsrf=''.join(sel.xpath('//input[@name="_xsrf"]/@value').extract())
+                hash_id=''.join(sel.xpath('//div[@class="zm-profile-header-op-btns clearfix"]/button/@data-id').extract())
+                
+                ## 基本信息
                 user['nickname'] = ''.join(sel.xpath('//div[@class="title-section ellipsis"]/a[@class="name"]/text()').extract())
-                user['location'] = ''.join(sel.xpath('//span[@class="location item"]/@title').extract())
-                user['industry'] = ''.join(sel.xpath('//span[@class="business item"]/@title').extract())
-                user['sex'] = ''.join(sel.xpath('//div[@class="item editable-group"]/span/span[@class="item"]/i/@class').extract()).replace("zg-icon gender ","")
+                user['location'] = ''.join(sel.xpath('//span[@class="location item"]/a/text()').extract())
+                user['industry'] = ''.join(sel.xpath('//span[@class="business item"]/a/text()').extract())
+                user['sex'] = ''.join(sel.xpath('//span[@class="item gender"]/i/@class').extract())
                 user['description'] = ''.join(sel.xpath('//span[@class="description unfold-item"]/span/text()').extract()).strip().replace("\n",'')
                 user['view_num'] = ''.join(sel.xpath('//span[@class="zg-gray-normal"]/strong/text()').extract())
                 user['update_time'] = str(datetime.now())
-    
+                
+                statistics = sel.xpath('//div[@class="profile-navbar clearfix"]/a/span/text()').extract()
+                if len(statistics) ==6:
+                    user['ask_num'] = statistics[1]             # 提问
+                    user['answer_num'] = statistics[2]          # 回答
+                    user['post_num'] = statistics[3]            # 文章
+                    user['collection_num'] = statistics[4]      # 收藏
+                    user['log_num'] = statistics[5]             # 公共编辑
+                    
+
+                ## 详细资料
+                # 个人成就
+                statistics = sel.xpath('//div[@class="zm-profile-module-desc"]/span/strong/text()').extract()
+                if len(statistics) ==4:
+                    user['agree_num'] = statistics[0] # 赞同
+                    user['thank_num'] = statistics[1] # 感谢
+                    user['fav_num'] = statistics[2]   # 收藏
+                    user['share_num'] = statistics[3] # 分享
+                
+                # 职业经历
                 user['jobs'] = []
                 job_nodes = sel.xpath('//div[@class="zm-profile-module zg-clear"][1]/div')
                 for node in job_nodes:
                     company = ''.join(node.xpath('//div[@class="ProfileItem-text ProfileItem-text--bold"]/a/text()').extract())
                     title = ''.join(node.xpath('//div[@class="ProfileItem-text ProfileItem-text--bold"]/span[2]/text()').extract())
                     user['jobs'].append({'company': company, 'title':title})
+                    
+                # 居住信息    
+                user['locations'] = []
+                location_nodes = sel.xpath('//div[@class="zm-profile-module zg-clear"][2]/div')
+                for node in location_nodes:
+                    local = ''.join(node.xpath('//div[@class="ProfileItem-text ProfileItem-text--bold"]/a/text()').extract())
+                    user['locations'].append({'local': local})
     
+                # 教育经历
                 user['educations'] = []
-                edu_nodes = sel.xpath('//div[@class="zm-profile-module zg-clear"][3]/div/ul[@class="zm-profile-details-items"]/li')
+                edu_nodes = sel.xpath('//div[@class="zm-profile-module zg-clear"][3]/div')
                 for node in edu_nodes:
                     school = ''.join(node.xpath('@data-title').extract())
                     major = ''.join(node.xpath('@data-sub-title').extract())
                     user['educations'].append({'school':school, 'major':major})
     
-                for node in sel.xpath('//a[@class="zm-profile-header-user-weibo"]/@href').extract():
-                    if node.startswith('http://weibo.com'):
-                        user['sinaweibo'] = node
-                    elif node.startswith('http://t.qq.com'):
-                        user['tencentweibo'] = node
     
+                ## 关注了和关注者
                 statistics = sel.xpath('//a[@class="item"]/strong/text()').extract()
-                followee_num =user['followee_num'] = statistics[0]
-                follower_num = user['follower_num']= statistics[1]
+                followee_num =user['followee_num'] = statistics[0] # 关注了的数量
+                follower_num = user['follower_num']= statistics[1] # 关注者的数量
     
-                statistics = sel.xpath('//div[@class="zm-profile-module-desc"]/span/strong/text()').extract()
-                if len(statistics) ==4:
-                    user['agree_num'] = statistics[0]
-                    user['thank_num'] = statistics[1]
-                    user['fav_num'] = statistics[2]
-                    user['share_num'] = statistics[3]
     
-                statistics = sel.xpath('//div[@class="profile-navbar clearfix"]/a/span/text()').extract()
-                if len(statistics) ==6:
-                    user['ask_num'] = statistics[1]
-                    user['answer_num'] = statistics[2]
-                    user['post_num'] = statistics[3]
-                    user['collection_num'] = statistics[4]
-                    user['log_num'] = statistics[5]
-    
-                _xsrf=''.join(sel.xpath('//input[@name="_xsrf"]/@value').extract())
-                hash_id=''.join(sel.xpath('//div[@class="zm-profile-header-op-btns clearfix"]/button/@data-id').extract())
-    
-                print 'NEW:%s' % user['username']
     
                 yield user
                 self.user_names.append(user['username'])
-                print 'NEW:%s' % user['username']
     
                 base_url = '/'.join(response.url.split('/')[:-1])
                 headers = self.headers
