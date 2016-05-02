@@ -20,12 +20,13 @@ import json
 import urlparse
 
 host = 'http://www.zhihu.com'
-home = 'http://www.zhihu.com/people/raymond-wang/about'
 
 class ZhihuUserSpider(CrawlSpider):
     name = 'zhihu_user'
     allowed_domains = ['zhihu.com']
-    start_urls = [home]
+    start_urls = ['http://www.zhihu.com/people/raymond-wang/about',
+                  'https://www.zhihu.com/people/Neal-Vermillion/about',
+                  'https://www.zhihu.com/people/abigail-z/about',]
     
     def __init__(self):
         self.user_names = []
@@ -47,18 +48,19 @@ class ZhihuUserSpider(CrawlSpider):
             try:
                 user = ZhihuUserItem()
                 
+                ## 通用参数
                 user['_id']=user['username']=response.url.split('/')[-2]
                 user['url']= response.url
                 _xsrf=''.join(sel.xpath('//input[@name="_xsrf"]/@value').extract())
                 hash_id=''.join(sel.xpath('//div[@class="zm-profile-header-op-btns clearfix"]/button/@data-id').extract())
                 
                 ## 基本信息
-                user['nickname'] = ''.join(sel.xpath('//div[@class="title-section ellipsis"]/a[@class="name"]/text()').extract())
-                user['location'] = ''.join(sel.xpath('//span[@class="location item"]/a/text()').extract())
-                user['industry'] = ''.join(sel.xpath('//span[@class="business item"]/a/text()').extract())
-                user['sex'] = ''.join(sel.xpath('//span[@class="item gender"]/i/@class').extract())
-                user['description'] = ''.join(sel.xpath('//span[@class="description unfold-item"]/span/text()').extract()).strip().replace("\n",'')
-                user['view_num'] = ''.join(sel.xpath('//span[@class="zg-gray-normal"]/strong/text()').extract())
+                user['nickname'] = ''.join(sel.xpath('//div[@class="title-section ellipsis"]/a[@class="name"]/text()').extract())                   # 姓名
+                user['location'] = ''.join(sel.xpath('//span[@class="location item"]/a/text()').extract())                                          # 地址
+                user['industry'] = ''.join(sel.xpath('//span[@class="business item"]/a/text()').extract())                                          # 产业
+                user['sex'] = ''.join(sel.xpath('//span[@class="item gender"]/i/@class').extract())                                                 # 性别
+                user['description'] = ''.join(sel.xpath('//span[@class="description unfold-item"]/span/text()').extract()).strip().replace("\n",'') # 描述信息
+                user['view_num'] = ''.join(sel.xpath('//span[@class="zg-gray-normal"]/strong/text()').extract())                                    # 浏览次数
                 user['update_time'] = str(datetime.now())
                 
                 statistics = sel.xpath('//div[@class="profile-navbar clearfix"]/a/span/text()').extract()
@@ -83,7 +85,7 @@ class ZhihuUserSpider(CrawlSpider):
                 user['jobs'] = []
                 job_nodes = sel.xpath('//div[@class="zm-profile-module zg-clear"][1]/div')
                 for node in job_nodes:
-                    company = ''.join(node.xpath('//div[@class="ProfileItem-text ProfileItem-text--bold"]/a/text()').extract())
+                    company = '/'.join(node.xpath('//div[@class="ProfileItem-text ProfileItem-text--bold"]/a/text()').extract())
                     title = ''.join(node.xpath('//div[@class="ProfileItem-text ProfileItem-text--bold"]/span[2]/text()').extract())
                     user['jobs'].append({'company': company, 'title':title})
                     
@@ -91,7 +93,7 @@ class ZhihuUserSpider(CrawlSpider):
                 user['locations'] = []
                 location_nodes = sel.xpath('//div[@class="zm-profile-module zg-clear"][2]/div')
                 for node in location_nodes:
-                    local = ''.join(node.xpath('//div[@class="ProfileItem-text ProfileItem-text--bold"]/a/text()').extract())
+                    local = '/'.join(node.xpath('//div[@class="ProfileItem-text ProfileItem-text--bold"]/a/text()').extract())
                     user['locations'].append({'local': local})
     
                 # 教育经历
@@ -108,8 +110,6 @@ class ZhihuUserSpider(CrawlSpider):
                 followee_num =user['followee_num'] = statistics[0] # 关注了的数量
                 follower_num = user['follower_num']= statistics[1] # 关注者的数量
     
-    
-    
                 yield user
                 self.user_names.append(user['username'])
     
@@ -117,6 +117,7 @@ class ZhihuUserSpider(CrawlSpider):
                 headers = self.headers
                 headers['Referer'] = response.url
     
+                '''
                 # followees
                 num = int(followee_num) if followee_num else 0
                 page_num = num/20
@@ -159,12 +160,13 @@ class ZhihuUserSpider(CrawlSpider):
                         headers['Referer'] = base_url + '/answers'
     
                     yield Request(base_url + '/answers?page=%d' % (i+1), headers = headers, cookies = self.cookies)
+                '''
                     
             except Exception, e:
                 open('error_pages/about_' + response.url.split('/')[-2]+'.html', 'w').write(response.body)
                 print '='*10 + str(e) 
         
-        elif typeinfo.startswith('followees') or typeinfo.startswith('ProfileFolloweesListV2'):
+        elif typeinfo.startswith('followees'):
             followees = []
             try:
                 links = sel.xpath('//div[@class="zm-list-content-medium"]/h2/a/@href').extract()
@@ -186,7 +188,7 @@ class ZhihuUserSpider(CrawlSpider):
                 open('error_pages/followees_' + response.url.split('/')[-2]+'.html', 'w').write(response.body)
                 print '='*10 + str(e)
 
-        elif typeinfo.startswith('followers') or typeinfo.startswith('ProfileFollowersListV2'):
+        elif typeinfo.startswith('followers'):
             followers = []
             try:
                 links = sel.xpath('//div[@class="zm-list-content-medium"]/h2/a/@href').extract()
