@@ -26,7 +26,8 @@ class ZhihuUserSpider(CrawlSpider):
     allowed_domains = ['zhihu.com']
     start_urls = ['http://www.zhihu.com/people/raymond-wang/about',
                   'https://www.zhihu.com/people/Neal-Vermillion/about',
-                  'https://www.zhihu.com/people/abigail-z/about',]
+                  'https://www.zhihu.com/people/abigail-z/about',
+                  'https://www.zhihu.com/people/ben-cao-gang-mu-72/about',]
     
     def __init__(self):
         self.user_names = []
@@ -117,51 +118,6 @@ class ZhihuUserSpider(CrawlSpider):
                 headers = self.headers
                 headers['Referer'] = response.url
     
-                '''
-                # followees
-                num = int(followee_num) if followee_num else 0
-                page_num = num/20
-                page_num += 1 if num%20 else 0
-    
-                for i in xrange(page_num):
-                    params = json.dumps({"hash_id":hash_id,"order_by":"created","offset":i*20})
-                    payload = {"method":"next", "params": params, "_xsrf":_xsrf,"username":user['username']}
-                    yield Request("http://www.zhihu.com/node/ProfileFolloweesListV2?"+urlencode(payload), headers = headers, cookies = self.cookies)
-    
-                # followers
-                num = int(follower_num) if follower_num else 0
-                page_num = num/20
-                page_num += 1 if num%20 else 0
-    
-                for i in xrange(page_num):
-                    params = json.dumps({"hash_id":hash_id,"order_by":"created","offset":i*20})
-                    payload = {"method":"next", "params": params, "_xsrf":_xsrf,"username":user['username']}
-                    yield Request("http://www.zhihu.com/node/ProfileFollowersListV2?"+urlencode(payload), headers = headers, cookies = self.cookies)
-    
-                # questions
-                num = int(user['ask_num']) if user['ask_num'] else 0
-                page_num = num/20
-                page_num += 1 if num%20 else 0
-                for i in xrange(page_num):
-                    if i > 0:
-                        headers['Referer'] = base_url + '/asks?page=%d' % (i-1)
-                    else:
-                        headers['Referer'] = base_url + '/asks'
-                    yield Request(base_url + '/asks?page=%d' % (i+1), headers = headers, cookies = self.cookies)
-    
-                # answers
-                num = int(user['answer_num']) if user['answer_num'] else 0
-                page_num = num/20
-                page_num += 1 if num%20 else 0
-                for i in xrange(page_num):
-                    if i > 0:
-                        headers['Referer'] = base_url + '/answers?page=%d' % (i-1)
-                    else:
-                        headers['Referer'] = base_url + '/answers'
-    
-                    yield Request(base_url + '/answers?page=%d' % (i+1), headers = headers, cookies = self.cookies)
-                '''
-                    
             except Exception, e:
                 open('error_pages/about_' + response.url.split('/')[-2]+'.html', 'w').write(response.body)
                 print '='*10 + str(e) 
