@@ -19,17 +19,23 @@ LOG_FILE = 'zhihu.log'
 LOG_LEVEL = 'INFO'
 
 
-# http://wiki.jikexueyuan.com/project/scrapy/settings.html
-DEPTH_LIMIT=0
-DEPTH_PRIORITY=0
+# 设置广度优先算法
+DEPTH_PRIORITY = 1
+SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
+SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
 
-CONCURRENT_ITEMS = 1000
-CONCURRENT_REQUESTS = 100
-CONCURRENT_REQUESTS_PER_DOMAIN = 100
-CONCURRENT_REQUESTS_PER_IP = 0
-CONCURRENT_REQUESTS_PER_SPIDER=100
 
-DNSCACHE_ENABLED = True
+# # http://wiki.jikexueyuan.com/project/scrapy/settings.html
+# DEPTH_LIMIT=0
+# DEPTH_PRIORITY=0
+# 
+# CONCURRENT_ITEMS = 1000
+# CONCURRENT_REQUESTS = 100
+# CONCURRENT_REQUESTS_PER_DOMAIN = 100
+# CONCURRENT_REQUESTS_PER_IP = 0
+# CONCURRENT_REQUESTS_PER_SPIDER=100
+# 
+# DNSCACHE_ENABLED = True
 
 
 #Redis Config 使用redis打开，不用redis请注释掉
@@ -70,7 +76,7 @@ HEADER = {
     "Cache-Control": "max-age=0",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
     "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.122 Safari/537.36 SE 2.X MetaSr 1.0",
-    "Referer": "https://www.zhihu.com/people/zhoumaoen",
+    "Referer": "https://www.zhihu.com/people/raymond-wang",
     "Accept-Encoding": "gzip,deflate,sdch",
     "Accept-Language": "zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,zh-TW;q=0.2",        
 }

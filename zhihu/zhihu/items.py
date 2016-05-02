@@ -12,6 +12,7 @@ class ZhihuUserItem(Item):
     username = Field()
     nickname = Field()
     location = Field()
+    locations = Field()
     industry = Field()
     sex = Field()
     jobs = Field()
