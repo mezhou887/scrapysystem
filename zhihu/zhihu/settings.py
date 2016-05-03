@@ -19,23 +19,17 @@ LOG_FILE = 'zhihu.log'
 LOG_LEVEL = 'INFO'
 
 
-# 设置广度优先算法
-DEPTH_PRIORITY = 1
-SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
-SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
+# http://wiki.jikexueyuan.com/project/scrapy/settings.html
+DEPTH_LIMIT=0
+DEPTH_PRIORITY=0
 
+CONCURRENT_ITEMS = 1000
+CONCURRENT_REQUESTS = 100
+CONCURRENT_REQUESTS_PER_DOMAIN = 100
+CONCURRENT_REQUESTS_PER_IP = 0
+CONCURRENT_REQUESTS_PER_SPIDER=100
 
-# # http://wiki.jikexueyuan.com/project/scrapy/settings.html
-# DEPTH_LIMIT=0
-# DEPTH_PRIORITY=0
-# 
-# CONCURRENT_ITEMS = 1000
-# CONCURRENT_REQUESTS = 100
-# CONCURRENT_REQUESTS_PER_DOMAIN = 100
-# CONCURRENT_REQUESTS_PER_IP = 0
-# CONCURRENT_REQUESTS_PER_SPIDER=100
-# 
-# DNSCACHE_ENABLED = True
+DNSCACHE_ENABLED = True
 
 
 #Redis Config 使用redis打开，不用redis请注释掉

@@ -1,9 +1,19 @@
+# -*- coding: utf-8 -*-
 # Define here the models for your scraped items
 #
 # See documentation in:
 # http://doc.scrapy.org/en/latest/topics/items.html
 
 from scrapy.item import Item, Field
+
+class BobaoItem(Item):
+    name=Field() #文章名
+    link=Field() #链接
+    time=Field() #发布时间
+    
+class ZhihuTestItem(Item):
+    pagelink = Field()
+    title = Field()    
 
 class ZhihuUserItem(Item):
     _id=Field()
