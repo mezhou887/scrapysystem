@@ -48,7 +48,6 @@ encoding//zhihu/zhihu/spiders/ask_spider.py=utf-8
 encoding//zhihu/zhihu/spiders/cookies_spider.py=utf-8
 encoding//zhihu/zhihu/spiders/login_spider.py=utf-8
 encoding//zhihu/zhihu/spiders/user_spider.py=utf-8
-encoding//zhihu/zhihu/spiders/user_spider_test.py=utf-8
 encoding//zhihu/zhihu/tesseract.py=utf-8
 encoding/<project>=UTF-8
 encoding/updateproxy.py=utf-8
