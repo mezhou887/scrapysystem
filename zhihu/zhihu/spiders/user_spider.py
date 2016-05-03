@@ -6,35 +6,37 @@ Created on 2016年4月27日
 '''
 
 # link1: http://blog.javachen.com/2014/06/08/using-scrapy-to-cralw-zhihu.html
-import scrapy
-from scrapy.selector import Selector
+import urlparse
 from scrapy.spiders import CrawlSpider, Rule
-from scrapy.http import FormRequest
-from scrapy.http import Request
+from scrapy.http import FormRequest, Request
+from datetime import datetime
 from scrapy.linkextractors import LinkExtractor
 
 from zhihu.settings import HEADER, COOKIES
 from zhihu.items import *
 
+host = 'http://www.zhihu.com'
 
 class ZhihuUserSpider(CrawlSpider):
     name = "zhihu_user"
     allowed_domains = ["zhihu.com"]
     start_urls = [
         'https://www.zhihu.com/people/raymond-wang/about',
-        'http://www.zhihu.com/people/Neal-Vermillion/about',
-        'http://www.zhihu.com/people/abigail-z/about',
-        'http://www.zhihu.com/people/ben-cao-gang-mu-72/about',
-        'http://www.zhihu.com/people/raymond-wang/asks',
-        'http://www.zhihu.com/people/Neal-Vermillion/asks',
-        'http://www.zhihu.com/people/abigail-z/asks',
-        'http://www.zhihu.com/people/ben-cao-gang-mu-72/asks',
+        'https://www.zhihu.com/people/Neal-Vermillion/about',
+        'https://www.zhihu.com/people/abigail-z/about',
+        'https://www.zhihu.com/people/ben-cao-gang-mu-72/about',
+        'https://www.zhihu.com/people/raymond-wang/asks',
+        'https://www.zhihu.com/people/Neal-Vermillion/asks',
+        'https://www.zhihu.com/people/abigail-z/asks',
+        'https://www.zhihu.com/people/ben-cao-gang-mu-72/asks',
         'https://www.zhihu.com/people/ben-cao-gang-mu-72/answers',
-        'http://www.zhihu.com/people/Neal-Vermillion/answers',
-        'http://www.zhihu.com/people/abigail-z/answers',
+        'https://www.zhihu.com/people/Neal-Vermillion/answers',
+        'https://www.zhihu.com/people/abigail-z/answers',
     ]
+
     
     rules = [
+        Rule(LinkExtractor(allow=(".*")), callback='parse_test', follow=True),
         Rule(LinkExtractor(allow=("/people/.*/asks")), callback='parse_asks', follow=True),
         Rule(LinkExtractor(allow=("/people/.*/about")), callback='parse_about', follow=True),
         Rule(LinkExtractor(allow=("/people/.*/followees")), callback='parse_followees', follow=True),
@@ -42,18 +44,20 @@ class ZhihuUserSpider(CrawlSpider):
         Rule(LinkExtractor(allow=("/people/.*/answers")), callback='parse_answers', follow=True),
     ]
     
+    
     def __init__(self,  *a,  **kwargs):
         super(ZhihuUserSpider, self).__init__(*a, **kwargs)
         self.user_names = []
         self.headers = HEADER
         self.cookies = COOKIES
 
+
     def make_requests_from_url(self, url):
         print 'make_requests_from_url'
         return FormRequest(url,headers = self.headers, cookies = self.cookies, dont_filter=True)
      
-#     def parse_test(self, response):
-#         print 'parse_test', response
+    def parse_test(self, response):
+        print 'parse_test', response
 # #         return scrapy.FormRequest(response.url,
 # #                     headers = self.headers, 
 # #                     cookies = self.cookies,
