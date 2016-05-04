@@ -6,19 +6,9 @@
 
 from scrapy.item import Item, Field
 
-class BobaoItem(Item):
-    name=Field() #文章名
-    link=Field() #链接
-    time=Field() #发布时间
-    
-class ZhihuTestItem(Item):
-    pagelink = Field()
-    title = Field()    
-
 class ZhihuUserItem(Item):
     _id=Field()
     url=Field()
-    img=Field()
     username = Field()
     nickname = Field()
     location = Field()
@@ -28,9 +18,6 @@ class ZhihuUserItem(Item):
     jobs = Field()
     educations = Field()
     description = Field()
-    sinaweibo = Field()
-    tencentweibo = Field()
-
     followee_num = Field()
     follower_num = Field()
 

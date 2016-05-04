@@ -44,7 +44,6 @@ encoding//zhihu/main.py=utf-8
 encoding//zhihu/zhihu/file_pipeline.py=utf-8
 encoding//zhihu/zhihu/items.py=utf-8
 encoding//zhihu/zhihu/settings.py=utf-8
-encoding//zhihu/zhihu/spiders/MininovaSpider.py=utf-8
 encoding//zhihu/zhihu/spiders/answer_spider.py=utf-8
 encoding//zhihu/zhihu/spiders/ask_spider.py=utf-8
 encoding//zhihu/zhihu/spiders/cookies_spider.py=utf-8
