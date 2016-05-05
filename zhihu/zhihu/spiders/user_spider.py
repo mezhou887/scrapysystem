@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import scrapy
 from scrapy.selector import Selector
 from scrapy.spiders import CrawlSpider,Rule
 from scrapy.http import Request, HtmlResponse
@@ -21,8 +22,6 @@ class ZhihuUserSpider(CrawlSpider):
     
     rules = [
         Rule(LinkExtractor(allow=("/people/.*/about")), callback='parse_about', follow=True),
-        Rule(LinkExtractor(allow=("/people/.*/followees")), callback='parse_followees', follow=True),
-        Rule(LinkExtractor(allow=("/people/.*/followers")), callback='parse_followers', follow=True),
     ]    
 
     def __init__(self,  *a,  **kwargs):
@@ -114,8 +113,18 @@ class ZhihuUserSpider(CrawlSpider):
             user['followee_num'] = statistics[0]        # 关注了的数量
             user['follower_num'] = statistics[1]        # 关注者的数量
  
-            self.user_names.append(user['username'])    # 这个以后要保存到数据库中
             yield user
+            self.user_names.append(user['username'])    # 这个以后要保存到数据库中
+ 
+            headers = self.headers;
+            headers['Referer'] = response.url
+            
+            ## 以下链接
+            followees_link = host+sel.xpath('//div[@class="zu-main-sidebar"]/div/a/@href').extract()[0]
+            followers_link = host+sel.xpath('//div[@class="zu-main-sidebar"]/div/a/@href').extract()[1]
+
+            yield scrapy.FormRequest(followees_link, headers = headers, cookies=self.cookies, callback=self.parse_followees)
+            yield scrapy.FormRequest(followers_link, headers = headers, cookies=self.cookies, callback=self.parse_followers)
  
         except Exception, e:
             open('error_pages/about_' + response.url.split('/')[-2]+'.html', 'w').write(response.body)
@@ -125,50 +134,33 @@ class ZhihuUserSpider(CrawlSpider):
     def parse_followees(self, response):
         print 'parse_followees', response.url
         sel = Selector(response)
-        username = response.url.split('/')[-2]
+        links = sel.xpath('//div[@class="zm-list-content-medium"]/h2/a/@href').extract()
 
-        try:
-            followees = []
-            followee = ZhihuFolloweesItem()
-            links = sel.xpath('//div[@class="zm-list-content-medium"]/h2/a/@href').extract()
- 
-            for link in links:
-                username_tmp = link.split('/')[-1]
-                followees.append(username_tmp)
-                if username_tmp in self.user_names:
-                    print 'Already Get:' + '%s' % username_tmp
-                    continue
- 
-            followee['_id'] = followee['username'] = username
-            followee['followees'] = followees
-            yield followee
- 
-        except Exception, e:
-            open('error_pages/followees_' + response.url.split('/')[-2]+'.html', 'w').write(response.body)
-            print '='*10 + str(e)
+        headers = self.headers;
+        headers['Referer'] = response.url
+
+        for link in links:
+            username_tmp = link.split('/')[-1]
+            if username_tmp in self.user_names:
+                print 'Already Get:' + '%s' % username_tmp
+                continue
+            
+            yield Request(link+'/about', headers = headers, cookies=self.cookies, callback=self.parse_about)
                  
                             
     def parse_followers(self, response):
         print 'parse_followers', response.url
         sel = Selector(response)
-        username = response.url.split('/')[-2]
+        links = sel.xpath('//div[@class="zm-list-content-medium"]/h2/a/@href').extract()
         
-        try:
-            followers = []        
-            follower = ZhihuFollowersItem()
-            links = sel.xpath('//div[@class="zm-list-content-medium"]/h2/a/@href').extract()
- 
-            for link in links:
-                username_tmp = link.split('/')[-1]
-                followers.append(username_tmp)
-                if username_tmp in self.user_names:
-                    print 'Already Get:' + '%s' % username_tmp
-                    continue
-  
-            follower['_id'] = follower['username'] = username
-            follower['followers'] = followers
-            yield follower
-  
-        except Exception, e:
-            open('error_pages/followers_' + response.url.split('/')[-2]+'.html', 'w').write(response.body)
-            print '='*10 + str(e)
+        headers = self.headers;
+        headers['Referer'] = response.url
+
+        for link in links:
+            username_tmp = link.split('/')[-1]
+            if username_tmp in self.user_names:
+                print 'Already Get:' + '%s' % username_tmp
+                continue
+
+            yield Request(link+'/about', headers = headers, cookies=self.cookies, callback=self.parse_about)
+            
