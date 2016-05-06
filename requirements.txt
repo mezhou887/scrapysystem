@@ -1,17 +1,15 @@
-sudo ln -s /usr/local/mysql/bin/* /usr/bin
-sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib
-sudo ln -s /usr/local/mysql/lib /usr/local/mysql/lib/mysql	
-
+## core
 pip install Scrapy
-pip install beautifulsoup4
-pip install BloomFilter
 pip install redis
+pip install scrapy-redis
 pip install requests
+pip install beautifulsoup4
 pip install scrapyd
 pip install scrapylib
 pip install scrapyd-client
-pip install scrapy-redis
-pip install scrapy-mongodb
+
+## other
+pip install BloomFilter
 pip install Pillow
 pip install shellpy
 pip install virtualenv
@@ -19,8 +17,9 @@ pip install virtualenvwrapper
 pip install jsonpipe
 pip install selenium
 
-pip freeze 
+
 
 apt-get install jq
-
 brew install libtiff libjpeg webp little-cms2
+
+pip freeze

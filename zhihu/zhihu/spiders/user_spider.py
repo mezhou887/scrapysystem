@@ -2,17 +2,15 @@
 
 import scrapy
 from scrapy.selector import Selector
-from scrapy.spiders import CrawlSpider,Rule
-from scrapy.http import Request, HtmlResponse
+from scrapy.http import Request
 from datetime import datetime
-from scrapy.linkextractors import LinkExtractor
 
 from zhihu.settings import HEADER, COOKIES
 from zhihu.items import *
 
 host = 'http://www.zhihu.com'
 
-class ZhihuUserSpider(CrawlSpider):
+class ZhihuUserSpider(scrapy.Spider):
    
     name = "zhihu_user"
     allowed_domains = ["zhihu.com"]
@@ -20,10 +18,6 @@ class ZhihuUserSpider(CrawlSpider):
         'https://www.zhihu.com/people/raymond-wang',
     ]
     
-    rules = [
-        Rule(LinkExtractor(allow=("/people/.*/about")), callback='parse_about', follow=True),
-    ]    
-
     def __init__(self,  *a,  **kwargs):
         super(ZhihuUserSpider, self).__init__(*a, **kwargs)
         self.user_names = []
@@ -31,25 +25,25 @@ class ZhihuUserSpider(CrawlSpider):
         self.cookies    = COOKIES
         
     def make_requests_from_url(self, url):
-        return Request(url, headers = self.headers, cookies = self.cookies, dont_filter=True)
-    
-    def _requests_to_follow(self, response):
-        if not isinstance(response, HtmlResponse):
-            return
-        seen = set()
-        for n, rule in enumerate(self._rules):
-            links = [l for l in rule.link_extractor.extract_links(response) if l not in seen]
-            if links and rule.process_links:
-                links = rule.process_links(links)
-            for link in links:
-                seen.add(link)
-                r = Request(url=link.url, headers = self.headers, cookies = self.cookies, callback=self._response_downloaded)
-                r.meta.update(rule=n, link_text=link.text)
-                yield rule.process_request(r)    
+        return Request(url, headers = self.headers, cookies = self.cookies, dont_filter=True)    
+
+    def parse(self, response):
+        sel = Selector(response)
+        
+        self.parse_detail(response)
+        
+        headers = self.headers;
+        headers['Referer'] = response.url
+       
+        followees_link = host+sel.xpath('//div[@class="zu-main-sidebar"]/div/a/@href').extract()[0]
+        followers_link = host+sel.xpath('//div[@class="zu-main-sidebar"]/div/a/@href').extract()[1]
+
+        yield scrapy.Request(followees_link, headers = headers, cookies=self.cookies, callback=self.parse_followees)
+        yield scrapy.Request(followers_link, headers = headers, cookies=self.cookies, callback=self.parse_followers)    
 
     # 处理的是个人主页
-    def parse_about(self, response):
-        print 'parse_about', response.url
+    def parse_detail(self, response):
+        print 'parse_detail', response.url
         sel = Selector(response)
         
         try:
@@ -113,18 +107,8 @@ class ZhihuUserSpider(CrawlSpider):
             user['followee_num'] = statistics[0]        # 关注了的数量
             user['follower_num'] = statistics[1]        # 关注者的数量
  
-            yield user
             self.user_names.append(user['username'])    # 这个以后要保存到数据库中
- 
-            headers = self.headers;
-            headers['Referer'] = response.url
-            
-            ## 以下链接
-            followees_link = host+sel.xpath('//div[@class="zu-main-sidebar"]/div/a/@href').extract()[0]
-            followers_link = host+sel.xpath('//div[@class="zu-main-sidebar"]/div/a/@href').extract()[1]
-
-            yield scrapy.FormRequest(followees_link, headers = headers, cookies=self.cookies, callback=self.parse_followees)
-            yield scrapy.FormRequest(followers_link, headers = headers, cookies=self.cookies, callback=self.parse_followers)
+            return user
  
         except Exception, e:
             open('error_pages/about_' + response.url.split('/')[-2]+'.html', 'w').write(response.body)
@@ -145,7 +129,7 @@ class ZhihuUserSpider(CrawlSpider):
                 print 'Already Get:' + '%s' % username_tmp
                 continue
             
-            yield Request(link+'/about', headers = headers, cookies=self.cookies, callback=self.parse_about)
+            yield Request(link+'/about', headers = headers, cookies=self.cookies, callback=self.parse_detail)
                  
                             
     def parse_followers(self, response):
@@ -162,5 +146,5 @@ class ZhihuUserSpider(CrawlSpider):
                 print 'Already Get:' + '%s' % username_tmp
                 continue
 
-            yield Request(link+'/about', headers = headers, cookies=self.cookies, callback=self.parse_about)
+            yield Request(link+'/about', headers = headers, cookies=self.cookies, callback=self.parse_detail)
             

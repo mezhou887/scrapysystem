@@ -88,5 +88,8 @@
 	https://github.com/mezhou887/scrapy-cluster
 	https://github.com/mezhou887/scrapylib
 	
+17. 分布式爬虫链接
+	http://scrapy-cluster.readthedocs.io/en/latest/index.html
+	
 	
 		
