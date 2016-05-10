@@ -24,3 +24,4 @@ brew install libtiff libjpeg webp little-cms2
 
 pip freeze
 pip list --outdated
+pip install -r requirements.conf
