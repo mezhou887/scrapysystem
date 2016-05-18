@@ -10,5 +10,6 @@ class luooItem(Item):
     pagelink = Field()
     title = Field()
     musicname = Field()
+    musiclink = Field()
     autor = Field()
 

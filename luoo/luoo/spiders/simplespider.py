@@ -10,18 +10,19 @@ class luooSpider(scrapy.Spider):
         
     # http://jandan.net/ooxx/page-1953#comments
     def parse(self, response):
-        print response.url; 
+        print response.url
         sel = Selector(response)
         items = []
         
         musics  = sel.xpath('//div[@id="luooPlayerPlaylist"]/ul/li').extract()
         
-        for music in musics:
+        for index, music in enumerate(musics):
             music_sel         = Selector(text=music)
             item              = luooItem()
             item['pagelink']  = response.url
             item['title']     = response.xpath('//title/text()').extract()
             item['musicname'] = music_sel.xpath('//div[@class="track-wrapper clearfix"]/a[1]/text()').extract()[0].strip()
+            item['musiclink'] = 'http://luoo-mp3.kssws.ks-cdn.com/low/luoo/radio' + str(int(response.url.split('/')[-1])) + '/' + str(index+1).rjust(2, '0') + '.mp3'
             item['autor']     = music_sel.xpath('//div[@class="track-wrapper clearfix"]/span[2]/text()').extract()[0].strip()
             items.append(item)
         return items        
