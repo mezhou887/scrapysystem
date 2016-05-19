@@ -19,7 +19,9 @@ SETTINGS_PRIORITIES = {
     'cmdline': 40,
 }
 
-
+'''
+重点,根据此来读取配置文件的
+'''
 class SettingsAttribute(object):
 
     """Class for storing data related to settings attributes.

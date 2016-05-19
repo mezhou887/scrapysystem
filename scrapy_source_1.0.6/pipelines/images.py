@@ -1,7 +1,5 @@
 """
-Images Pipeline
-
-See documentation in topics/media-pipeline.rst
+图片管道
 """
 
 import hashlib

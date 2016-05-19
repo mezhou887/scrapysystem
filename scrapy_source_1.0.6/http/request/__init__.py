@@ -1,8 +1,5 @@
 """
-This module implements the Request class which is used to represent HTTP
-requests in Scrapy.
-
-See documentation in docs/topics/request-response.rst
+基本的request请求对象
 """
 import six
 from w3lib.url import safe_url_string
@@ -15,21 +12,23 @@ from scrapy.http.common import obsolete_setter
 
 class Request(object_ref):
 
+    # url参数是必须填的
     def __init__(self, url, callback=None, method='GET', headers=None, body=None,
                  cookies=None, meta=None, encoding='utf-8', priority=0,
                  dont_filter=False, errback=None):
 
-        self._encoding = encoding  # this one has to be set first
+        self._encoding = encoding  # 默认字符编码是utf-8
         self.method = str(method).upper()
         self._set_url(url)
         self._set_body(body)
         assert isinstance(priority, int), "Request priority not an integer: %r" % priority
-        self.priority = priority
+        self.priority = priority # 优先级必须为数字，高优先级的先执行
 
         assert callback or not errback, "Cannot use errback without a callback"
         self.callback = callback
         self.errback = errback
 
+        # 自动添加cookies和headers
         self.cookies = cookies or {}
         self.headers = Headers(headers or {}, encoding=encoding)
         self.dont_filter = dont_filter
@@ -50,8 +49,7 @@ class Request(object_ref):
             self._url = escape_ajax(safe_url_string(url))
         elif isinstance(url, six.text_type):
             if self.encoding is None:
-                raise TypeError('Cannot convert unicode url - %s has no encoding' %
-                                type(self).__name__)
+                raise TypeError('Cannot convert unicode url - %s has no encoding' % type(self).__name__)
             self._set_url(url.encode(self.encoding))
         else:
             raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)
@@ -68,8 +66,7 @@ class Request(object_ref):
             self._body = body
         elif isinstance(body, six.text_type):
             if self.encoding is None:
-                raise TypeError('Cannot convert unicode body - %s has no encoding' %
-                                type(self).__name__)
+                raise TypeError('Cannot convert unicode body - %s has no encoding' % type(self).__name__)
             self._body = body.encode(self.encoding)
         elif body is None:
             self._body = ''

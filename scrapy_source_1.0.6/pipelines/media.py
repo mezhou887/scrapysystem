@@ -1,3 +1,6 @@
+'''
+媒体管道
+'''
 from __future__ import print_function
 
 import logging

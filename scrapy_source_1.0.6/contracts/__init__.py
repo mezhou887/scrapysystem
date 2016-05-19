@@ -7,7 +7,9 @@ from scrapy.http import Request
 from scrapy.utils.spider import iterate_spider_output
 from scrapy.utils.python import get_spec
 
-
+'''
+这个包不知道是干嘛的
+'''
 class ContractsManager(object):
     contracts = {}
 

@@ -12,7 +12,7 @@ from scrapy.link import Link
 from scrapy.utils.python import unique as unique_list
 from scrapy.exceptions import ScrapyDeprecationWarning
 
-
+# 类已废弃，请使用scrapy.linkextractors.LinkExtractor
 class HtmlParserLinkExtractor(HTMLParser):
 
     def __init__(self, tag="a", attr="href", process=None, unique=False):

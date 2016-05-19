@@ -14,7 +14,7 @@ from scrapy.utils.python import unique as unique_list, str_to_unicode
 from scrapy.utils.response import get_base_url
 from scrapy.exceptions import ScrapyDeprecationWarning
 
-
+# 类已废弃，请使用scrapy.linkextractors.LinkExtractor
 class BaseSgmlLinkExtractor(SGMLParser):
 
     def __init__(self, tag="a", attr="href", unique=False, process_value=None):
@@ -97,7 +97,7 @@ class BaseSgmlLinkExtractor(SGMLParser):
         it doesn't contain any patterns"""
         return True
 
-
+# 类已废弃，请使用scrapy.linkextractors.LinkExtractor
 class SgmlLinkExtractor(FilteringLinkExtractor):
 
     def __init__(self, allow=(), deny=(), allow_domains=(), deny_domains=(), restrict_xpaths=(),

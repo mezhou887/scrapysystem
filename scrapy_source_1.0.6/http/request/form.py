@@ -1,8 +1,5 @@
 """
-This module implements the FormRequest class which is a more convenient class
-(than Request) to generate Requests based on form data.
-
-See documentation in docs/topics/request-response.rst
+表单请求对象，用post进行提交
 """
 
 from six.moves.urllib.parse import urljoin, urlencode
@@ -14,6 +11,7 @@ from scrapy.utils.python import unicode_to_str
 
 class FormRequest(Request):
 
+    # 默认是post请求，设置Content-Type
     def __init__(self, *args, **kwargs):
         formdata = kwargs.pop('formdata', None)
         if formdata and kwargs.get('method') is None:

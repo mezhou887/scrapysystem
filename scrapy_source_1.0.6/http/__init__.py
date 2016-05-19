@@ -3,6 +3,7 @@ Module containing all HTTP related classes
 
 Use this module (instead of the more specific ones) when importing Headers,
 Request and Response outside this module.
+重点，需要好好阅读源代码
 """
 
 from scrapy.http.headers import Headers

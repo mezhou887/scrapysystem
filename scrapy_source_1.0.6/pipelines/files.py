@@ -1,7 +1,5 @@
 """
-Files Pipeline
-
-See documentation in topics/media-pipeline.rst
+文件管道
 """
 
 import hashlib
@@ -288,7 +286,7 @@ class FilesPipeline(MediaPipeline):
         spider.crawler.stats.inc_value('file_count', spider=spider)
         spider.crawler.stats.inc_value('file_status_count/%s' % status, spider=spider)
 
-    ### Overridable Interface
+    # 从这里看出file_urls域接收到的必须是数组，不能是字符串
     def get_media_requests(self, item, info):
         return [Request(x) for x in item.get(self.FILES_URLS_FIELD, [])]
 
