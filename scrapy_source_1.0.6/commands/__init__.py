@@ -1,5 +1,5 @@
 """
-Base class for Scrapy commands
+基本的爬虫命令，这个包下面的都不是重点关注的内容
 """
 import os
 from optparse import OptionGroup
@@ -8,10 +8,11 @@ from twisted.python import failure
 from scrapy.utils.conf import arglist_to_dict
 from scrapy.exceptions import UsageError
 
-
+# 基类，留给此包下的其他类去继承的
 class ScrapyCommand(object):
 
-    requires_project = False
+    # 定义是否依赖项目才能运行此命令
+    requires_project = False 
     crawler_process = None
 
     # default settings to be used for this command instead of global defaults

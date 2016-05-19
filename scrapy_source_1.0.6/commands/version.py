@@ -8,7 +8,8 @@ import OpenSSL
 import scrapy
 from scrapy.commands import ScrapyCommand
 
-
+# scrapy version
+# scrapy version -v
 class Command(ScrapyCommand):
 
     default_settings = {'LOG_ENABLED': False}
@@ -21,8 +22,7 @@ class Command(ScrapyCommand):
 
     def add_options(self, parser):
         ScrapyCommand.add_options(self, parser)
-        parser.add_option("--verbose", "-v", dest="verbose", action="store_true",
-            help="also display twisted/python/platform info (useful for bug reports)")
+        parser.add_option("--verbose", "-v", dest="verbose", action="store_true", help="also display twisted/python/platform info (useful for bug reports)")
 
     def run(self, args, opts):
         if opts.verbose:
