@@ -1,5 +1,5 @@
 """
-基本的中间件有以下内容
+绯荤粺鍐呯疆鐨勪笅杞戒腑闂翠欢, 涓昏灏辨槸process_request鍜宲rocess_response杩欎袱涓柟娉曪紝杩欎釜鍖呮槸閲嶇偣
 {
 'scrapy.downloadermiddlewares.robotstxt.RobotsTxtMiddleware': 100,
 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware': 300,

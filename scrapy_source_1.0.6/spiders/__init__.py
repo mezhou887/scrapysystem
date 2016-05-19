@@ -1,5 +1,4 @@
 """
-四种爬虫类型都在这个包下面，最常用的有两种Spider和CrawlSpider
 """
 import logging
 import warnings
@@ -14,7 +13,6 @@ from scrapy.exceptions import ScrapyDeprecationWarning
 
 class Spider(object_ref):
     """
-        爬虫的基类，所有爬虫都继承自此类.
     """
 
     name = None

@@ -1,6 +1,6 @@
 """
 Item pipeline
-����ý�������ļ��Ĵ洢��صģ��洢�ļ���ͼƬ��ý���
+各种媒体类型文件的存储相关的，存储文件，图片，媒体等，这个也是重点，需好好阅读源代码
 """
 
 from scrapy.middleware import MiddlewareManager

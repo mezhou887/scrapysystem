@@ -1,3 +1,3 @@
 """
-Scrapy core library classes and functions.
+Scrapy 的核心类，这个是重点中的重点
 """
