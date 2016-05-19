@@ -4,6 +4,8 @@ import json
 import codecs
 from collections import OrderedDict
 from luoo.items import *
+from scrapy.http import Request
+from scrapy.pipelines.files import FilesPipeline
   
     
 class JsonPipeline(object):
@@ -18,3 +20,10 @@ class JsonPipeline(object):
 
     def spider_closed(self, spider):
         self.file.close()
+        
+class CustomerFilesPipeline(FilesPipeline):
+    
+    def get_media_requests(self, item, info):
+        return [Request(item.get(self.FILES_URLS_FIELD))]    
+    
+        

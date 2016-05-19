@@ -7,9 +7,11 @@ from scrapy.item import Item, Field
 
 class luooItem(Item):
     
-    pagelink = Field()
-    title = Field()
+    pagelink  = Field()
+    title     = Field()
     musicname = Field()
     musiclink = Field()
-    autor = Field()
+    autor     = Field()
+    file_urls = Field()
+    files     = Field()
 

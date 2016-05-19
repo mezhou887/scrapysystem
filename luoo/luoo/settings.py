@@ -11,6 +11,7 @@ NEWSPIDER_MODULE = 'luoo.spiders'
 
 ITEM_PIPELINES = {
     'luoo.file_pipeline.JsonPipeline': 300,
+    'luoo.file_pipeline.CustomerFilesPipeline': 400,
 }
 
 
@@ -18,6 +19,9 @@ ITEM_PIPELINES = {
 LOG_FILE = 'luoo.log'
 LOG_LEVEL = 'INFO' #'DEBUG'
 
+
+FILES_EXPIRES = 90
+FILES_STORE = os.path.join(PROJECT_DIR,'data/files')
 
 CONCURRENT_REQUESTS = 500
 CONCURRENT_REQUESTS_PER_DOMAIN = 20

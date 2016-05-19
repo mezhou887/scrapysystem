@@ -4,6 +4,7 @@ encoding//cnbeta/cnbeta/mysql_pipeline.py=utf-8
 encoding//cnbeta/cnbeta/settings.py=utf-8
 encoding//cnbeta/cnbeta/spiders/xpathspider.py=utf-8
 encoding//cnbeta/main.py=utf-8
+encoding//jiandan/jiandan/file_pipeline.py=utf-8
 encoding//jiandan/jiandan/settings.py=utf-8
 encoding//jiandan/jiandan/spiders/simplespider.py=utf-8
 encoding//jiandan/main.py=utf-8

@@ -22,7 +22,8 @@ class luooSpider(scrapy.Spider):
             item['pagelink']  = response.url
             item['title']     = response.xpath('//title/text()').extract()
             item['musicname'] = music_sel.xpath('//div[@class="track-wrapper clearfix"]/a[1]/text()').extract()[0].strip()
-            item['musiclink'] = 'http://luoo-mp3.kssws.ks-cdn.com/low/luoo/radio' + str(int(response.url.split('/')[-1])) + '/' + str(index+1).rjust(2, '0') + '.mp3'
+            musiclink         = 'http://luoo-mp3.kssws.ks-cdn.com/low/luoo/radio' + str(int(response.url.split('/')[-1])) + '/' + str(index+1).rjust(2, '0') + '.mp3'
+            item['musiclink'] = item['file_urls'] = musiclink
             item['autor']     = music_sel.xpath('//div[@class="track-wrapper clearfix"]/span[2]/text()').extract()[0].strip()
             items.append(item)
         return items        
