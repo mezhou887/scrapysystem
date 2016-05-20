@@ -6,7 +6,7 @@ from scrapy.selector import Selector
 class luooSpider(scrapy.Spider):
     name = "luoo"
     allowed_domains = ["luoo.net"]
-    start_urls = ['http://www.luoo.net/music/'+str(i).rjust(3,'0') for i in range(1, 21)]
+    start_urls = ['http://www.luoo.net/music/'+str(i).rjust(3,'0') for i in range(1, 1000)]
         
     # http://jandan.net/ooxx/page-1953#comments
     def parse(self, response):

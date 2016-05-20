@@ -27,6 +27,7 @@ encoding//proxylist/main.py=utf-8
 encoding//proxylist/proxylist/file_pipeline.py=utf-8
 encoding//proxylist/proxylist/settings.py=utf-8
 encoding//proxylist/proxylist/spiders/xpathspider.py=utf-8
+encoding//release/manong/main.py=utf-8
 encoding//scrapy_source_1.0.6/downloadermiddlewares/ajaxcrawl.py=utf-8
 encoding//template/main.py=utf-8
 encoding//template/template/config.py=utf-8
