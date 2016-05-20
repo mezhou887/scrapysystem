@@ -16,6 +16,8 @@ pip install virtualenv
 pip install virtualenvwrapper
 pip install jsonpipe
 pip install selenium
+pip install xlrd
+pip install xlwt
 
 
 
