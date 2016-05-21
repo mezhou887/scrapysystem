@@ -91,5 +91,7 @@
 17. 分布式爬虫链接
 	http://scrapy-cluster.readthedocs.io/en/latest/index.html
 	
+18. git命令
+	git clone https://github.com/mezhou887/scrapysystem.git
 	
 		
