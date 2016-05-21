@@ -94,4 +94,8 @@
 18. git命令
 	git clone https://github.com/mezhou887/scrapysystem.git
 	
+19. crontab执行命令 (这种方案不行)
+	36 10 * * * /usr/bin/python2.7 /Users/mezhou887/Document/scrapysystem/release/cnbeta/main.py
+	36 10 * * * /usr/bin/python2.7 /Users/mezhou887/Document/scrapysystem/release/manong/main.py
+	
 		
