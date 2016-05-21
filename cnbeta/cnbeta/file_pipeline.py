@@ -4,7 +4,7 @@ import json
 import codecs
 from collections import OrderedDict
 from cnbeta.items import *
-  
+import datetime
     
 class DoNothingPipeline(object):
     def process_item(self, item, spider):
@@ -14,7 +14,7 @@ class DoNothingPipeline(object):
 class JsonPipeline(object):
 
     def __init__(self):
-        self.file = codecs.open('cnbeta.json', 'w', encoding='utf-8')
+        self.file = codecs.open('cnbeta_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
 
     def process_item(self, item, spider):
         line = json.dumps(OrderedDict(item), ensure_ascii=False, sort_keys=False) + "\n"
