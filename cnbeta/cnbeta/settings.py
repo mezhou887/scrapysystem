@@ -11,18 +11,18 @@ NEWSPIDER_MODULE = 'cnbeta.spiders'
 ITEM_PIPELINES = {
     'cnbeta.file_pipeline.DoNothingPipeline': 100,
     'cnbeta.file_pipeline.JsonPipeline': 300,
-    'cnbeta.mysql_pipeline.MySQLPipeline': 400,    
+#     'cnbeta.mysql_pipeline.MySQLPipeline': 400,    
 }
 
 #Log Info
 LOG_FILE = 'cnbeta.log'
 LOG_LEVEL = 'INFO'
 
-#MySQL Config
-MYSQL_HOST = 'localhost'
-MYSQL_DBNAME = 'scrapy'
-MYSQL_USER = 'mezhou887'
-MYSQL_PASSWD = 'mezhou887'
+# #MySQL Config
+# MYSQL_HOST = 'localhost'
+# MYSQL_DBNAME = 'scrapy'
+# MYSQL_USER = 'mezhou887'
+# MYSQL_PASSWD = 'mezhou887'
 
 #Email Config
 EXTENSIONS = {
