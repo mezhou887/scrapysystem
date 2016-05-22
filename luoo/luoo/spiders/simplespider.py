@@ -20,7 +20,7 @@ class luooSpider(scrapy.Spider):
             music_sel         = Selector(text=music)
             item              = luooItem()
             item['pagelink']  = response.url
-            item['title']     = response.xpath('//title/text()').extract()[0].strip()
+            item['title']     = str(response.url.split('/')[-1]).rjust(3, '0') + '_' + response.xpath('//title/text()').extract()[0].strip()
             item['musicname'] = music_sel.xpath('//div[@class="track-wrapper clearfix"]/a[1]/text()').extract()[0].strip()
             musiclink         = 'http://luoo-mp3.kssws.ks-cdn.com/low/luoo/radio' + str(int(response.url.split('/')[-1])) + '/' + str(index+1).rjust(2, '0') + '.mp3'
             item['musiclink'] = item['file_urls'] = musiclink
