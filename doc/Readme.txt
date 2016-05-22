@@ -95,7 +95,7 @@
 	git clone https://github.com/mezhou887/scrapysystem.git
 	
 19. crontab 最小粒度是一分钟执行一次
-	36 10 * * * /usr/bin/python2.7 /Users/mezhou887/Document/scrapysystem/release/cnbeta/main.py >> cnbeta.log
-	36 10 * * * /usr/bin/python2.7 /Users/mezhou887/Document/scrapysystem/release/manong/main.py >> manong.log
+	36 10 * * * /Users/mezhou887/Document/scrapysystem/release/cnbeta/cron.sh
+	36 10 * * * /Users/mezhou887/Document/scrapysystem/release/manong/cron.sh
 	
 		
