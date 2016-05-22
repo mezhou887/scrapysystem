@@ -100,5 +100,6 @@
 05 6 * * * cd /Users/mezhou887/Documents/scrapysystem/release/manong&&/Library/Frameworks/Python.framework/Versions/2.7/bin/scrapy crawl manong
 05 6 * * * cd /Users/mezhou887/Documents/scrapysystem/release/luoo&&/Library/Frameworks/Python.framework/Versions/2.7/bin/scrapy crawl luoo
 05 6 * * * cd /Users/mezhou887/Documents/scrapysystem/release/jiandan&&/Library/Frameworks/Python.framework/Versions/2.7/bin/scrapy crawl jiandan_redis
+05 6 * * * cd /Users/mezhou887/Documents/scrapysystem/release/meizitu&&/Library/Frameworks/Python.framework/Versions/2.7/bin/scrapy crawl meizitu_redis
 	
 		
