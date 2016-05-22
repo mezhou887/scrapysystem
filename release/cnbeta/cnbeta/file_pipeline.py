@@ -5,6 +5,7 @@ import codecs
 from collections import OrderedDict
 from cnbeta.items import *
 import datetime
+import platform
     
 class DoNothingPipeline(object):
     def process_item(self, item, spider):
@@ -14,7 +15,13 @@ class DoNothingPipeline(object):
 class JsonPipeline(object):
 
     def __init__(self):
-        self.file = codecs.open('cnbeta_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
+        sysstr = platform.system()
+        if(sysstr =="Windows"):
+            self.file = codecs.open('E:\Crawler\export\cnbeta_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
+        elif(sysstr == "Darwin"):
+            self.file = codecs.open('/Volumes/"VMware Shared Folders"/ScrapyData/cnbeta_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
+        else:
+            self.file = codecs.open('cnbeta_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
 
     def process_item(self, item, spider):
         line = json.dumps(OrderedDict(item), ensure_ascii=False, sort_keys=False) + "\n"

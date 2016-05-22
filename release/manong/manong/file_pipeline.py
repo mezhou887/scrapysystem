@@ -6,11 +6,19 @@ import xlwt
 from collections import OrderedDict
 from manong.items import *
 import datetime
+import platform
     
 class JsonPipeline(object):
 
     def __init__(self):
-        self.file = codecs.open('manong.json', 'w', encoding='utf-8')
+        sysstr = platform.system()
+        if(sysstr =="Windows"):
+            self.file = codecs.open('E:\Crawler\export\manong_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
+        elif(sysstr == "Darwin"):
+            self.file = codecs.open('/Volumes/"VMware Shared Folders"/ScrapyData/manong_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
+        else:
+            self.file = codecs.open('manong_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
+        
 
     def process_item(self, item, spider):
         line = json.dumps(OrderedDict(item), ensure_ascii=False, sort_keys=False) + "\n"
@@ -31,7 +39,13 @@ class ExcelPipeline(object):
     def process_item(self, item, spider):
         self.booksheet.write(self.index,0,item['name'])
         self.booksheet.write(self.index,1,item['link'])
-        self.workbook.save(u'码农周刊'+datetime.datetime.now().strftime('%Y%m%d')+'.xls')
+        sysstr = platform.system()
+        if(sysstr =="Windows"):
+            self.workbook.save(u'E:\Crawler\export\码农周刊'+datetime.datetime.now().strftime('%Y%m%d')+'.xls')
+        elif(sysstr == "Darwin"):
+            self.workbook.save(u'/Volumes/"VMware Shared Folders"/ScrapyData/码农周刊'+datetime.datetime.now().strftime('%Y%m%d')+'.xls')
+        else:
+            self.workbook.save(u'码农周刊'+datetime.datetime.now().strftime('%Y%m%d')+'.xls')
         self.index += 1
         return item
 
