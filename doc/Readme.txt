@@ -95,7 +95,8 @@
 	git clone https://github.com/mezhou887/scrapysystem.git
 	
 19. crontab 最小粒度是一分钟执行一次
-	00 17 * * * cd /Users/mezhou887/Document/scrapysystem/release/cnbeta&&/usr/local/bin/scrapy crawl cnbeta_base
-	00 17 * * * cd /Users/mezhou887/Document/scrapysystem/release/manong&&/usr/local/bin/scrapy crawl manong
+
+05 17 * * * cd /Users/mezhou887/Document/scrapysystem/release/cnbeta&&/usr/local/bin/scrapy crawl cnbeta_base
+05 17 * * * cd /Users/mezhou887/Document/scrapysystem/release/manong&&/usr/local/bin/scrapy crawl manong
 	
 		
