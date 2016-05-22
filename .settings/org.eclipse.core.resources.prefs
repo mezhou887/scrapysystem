@@ -27,6 +27,7 @@ encoding//proxylist/main.py=utf-8
 encoding//proxylist/proxylist/file_pipeline.py=utf-8
 encoding//proxylist/proxylist/settings.py=utf-8
 encoding//proxylist/proxylist/spiders/xpathspider.py=utf-8
+encoding//release/cnbeta/cnbeta/file_pipeline.py=utf-8
 encoding//release/cnbeta/cnbeta/settings.py=utf-8
 encoding//release/cnbeta/cnbeta/spiders/xpathspider.py=utf-8
 encoding//release/cnbeta/main.py=utf-8
