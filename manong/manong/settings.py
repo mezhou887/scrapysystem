@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import os
 import platform
 
 PROJECT_DIR = "E:/Crawler/export/" if platform.system() == 'Windows' else "/Volumes/VMware Shared Folders/ScrapyData/"

@@ -4,18 +4,20 @@ import json
 import codecs
 from collections import OrderedDict
 from xxxiao.items import *
+import datetime
+import platform
   
     
-class DoNothingPipeline(object):
-    def process_item(self, item, spider):
-        print 'DoNothing'
-        return item
-        
-
 class JsonPipeline(object):
 
     def __init__(self):
-        self.file = codecs.open('xxxiao.json', 'w', encoding='utf-8')
+        sysstr = platform.system()
+        if(sysstr =="Windows"):
+            self.file = codecs.open('E:/Crawler/export/xxxiao_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
+        elif(sysstr == "Darwin"):
+            self.file = codecs.open('/Volumes/"VMware Shared Folders"/ScrapyData/xxxiao_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
+        else:
+            self.file = codecs.open('xxxiao_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
 
     def process_item(self, item, spider):
         line = json.dumps(OrderedDict(item), ensure_ascii=False, sort_keys=False) + "\n"
