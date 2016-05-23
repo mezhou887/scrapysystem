@@ -11,7 +11,6 @@ class manongSpider(scrapy.Spider):
     start_urls = ['http://weekly.manong.io/issues/'+str(i) for i in range(1, 200)]
         
     def parse(self, response):
-        print response.url
         sel = Selector(response)
         items = []
         articles  = sel.xpath('//h4').extract()

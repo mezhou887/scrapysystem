@@ -39,6 +39,7 @@ encoding//release/luoo/main.py=utf-8
 encoding//release/manong/main.py=utf-8
 encoding//release/manong/manong/file_pipeline.py=utf-8
 encoding//release/manong/manong/settings.py=utf-8
+encoding//release/manong/manong/spiders/simplespider.py=utf-8
 encoding//release/meizitu/main.py=utf-8
 encoding//release/meizitu/meizitu/file_pipeline.py=utf-8
 encoding//release/meizitu/meizitu/settings.py=utf-8
