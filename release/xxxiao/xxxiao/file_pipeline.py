@@ -6,12 +6,6 @@ from collections import OrderedDict
 from xxxiao.items import *
   
     
-class DoNothingPipeline(object):
-    def process_item(self, item, spider):
-        print 'DoNothing'
-        return item
-        
-
 class JsonPipeline(object):
 
     def __init__(self):
