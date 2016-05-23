@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 import platform
 
-PROJECT_DIR = "E:/Crawler/export/" if platform.system() == 'Windows' else "/Volumes/VMware Shared Folders/ScrapyData/"
+PROJECT_DIR = "E:/Crawler/export/" if platform.system() == 'Windows' else "/Users/mezhou887/Downloads/ScrapyData/"
 
 BOT_NAME = 'cnbeta'
 

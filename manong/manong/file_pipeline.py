@@ -15,7 +15,7 @@ class JsonPipeline(object):
         if(sysstr =="Windows"):
             self.file = codecs.open('E:/Crawler/export/manong_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
         elif(sysstr == "Darwin"):
-            self.file = codecs.open('/Volumes/"VMware Shared Folders"/ScrapyData/manong_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
+            self.file = codecs.open('/Users/mezhou887/Downloads/ScrapyData/manong_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
         else:
             self.file = codecs.open('manong_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
         
@@ -43,7 +43,7 @@ class ExcelPipeline(object):
         if(sysstr =="Windows"):
             self.workbook.save(u'E:/Crawler/export/码农周刊'+datetime.datetime.now().strftime('%Y%m%d')+'.xls')
         elif(sysstr == "Darwin"):
-            self.workbook.save(u'/Volumes/"VMware Shared Folders"/ScrapyData/码农周刊'+datetime.datetime.now().strftime('%Y%m%d')+'.xls')
+            self.workbook.save(u'/Users/mezhou887/Downloads/ScrapyData/码农周刊'+datetime.datetime.now().strftime('%Y%m%d')+'.xls')
         else:
             self.workbook.save(u'码农周刊'+datetime.datetime.now().strftime('%Y%m%d')+'.xls')
         self.index += 1
