@@ -13,7 +13,7 @@ class JsonPipeline(object):
     def __init__(self):
         sysstr = platform.system()
         if(sysstr =="Windows"):
-            self.file = codecs.open('E:\Crawler\export\manong_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
+            self.file = codecs.open('E:/Crawler/export/manong_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
         elif(sysstr == "Darwin"):
             self.file = codecs.open('/Volumes/"VMware Shared Folders"/ScrapyData/manong_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
         else:
@@ -41,7 +41,7 @@ class ExcelPipeline(object):
         self.booksheet.write(self.index,1,item['link'])
         sysstr = platform.system()
         if(sysstr =="Windows"):
-            self.workbook.save(u'E:\Crawler\export\码农周刊'+datetime.datetime.now().strftime('%Y%m%d')+'.xls')
+            self.workbook.save(u'E:/Crawler/export/码农周刊'+datetime.datetime.now().strftime('%Y%m%d')+'.xls')
         elif(sysstr == "Darwin"):
             self.workbook.save(u'/Volumes/"VMware Shared Folders"/ScrapyData/码农周刊'+datetime.datetime.now().strftime('%Y%m%d')+'.xls')
         else:

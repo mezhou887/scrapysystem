@@ -13,7 +13,7 @@ class JsonPipeline(object):
     def __init__(self):
         sysstr = platform.system()
         if(sysstr =="Windows"):
-            self.file = codecs.open('E:\Crawler\export\manong_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
+            self.file = codecs.open('E:/Crawler/export/manong_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
         elif(sysstr == "Darwin"):
             self.file = codecs.open('/Volumes/"VMware Shared Folders"/ScrapyData/manong_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
         else:
