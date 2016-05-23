@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 import os
+import platform
 
-PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+PROJECT_DIR = "E:/Crawler/export/" if platform.system() == 'Windows' else "/Volumes/VMware Shared Folders/ScrapyData/"
 
 BOT_NAME = 'zhihu'
 

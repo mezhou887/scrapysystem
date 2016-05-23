@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*-
 # cat xxxiao.json | jq '.[] | {message: .title, name: .pagelink}'
 import os
+import platform
 
-PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+PROJECT_DIR = "E:/Crawler/export/" if platform.system() == 'Windows' else "/Volumes/VMware Shared Folders/ScrapyData/"
 
 BOT_NAME = 'xxxiao'
 
@@ -32,7 +33,7 @@ LOG_LEVEL = 'INFO' #'DEBUG'
 
 
 # 图片存储信息
-IMAGES_STORE = os.path.join(PROJECT_DIR,'data/images')
+IMAGES_STORE = os.path.join(PROJECT_DIR,'xxxiao/data/images')
 IMAGES_EXPIRES = 30
 IMAGES_THUMBS = {
     'small': (50, 50),
@@ -44,7 +45,7 @@ IMAGES_MIN_WIDTH = 10
 
 
 # 文件存储信息 由于文件和图片都是存储到full路径下的，所以没必要保留多个
-#FILES_STORE = os.path.join(PROJECT_DIR,'data/files')
+#FILES_STORE = os.path.join(PROJECT_DIR,'xxxiao/data/files')
 #FILES_EXPIRES = 30
 
 

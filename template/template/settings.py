@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 import os
+import platform
 
-PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+PROJECT_DIR = "E:/Crawler/export/" if platform.system() == 'Windows' else "/Volumes/VMware Shared Folders/ScrapyData/"
 
 BOT_NAME = 'template'
 
@@ -51,7 +52,7 @@ LOG_LEVEL = 'INFO' #'DEBUG'
 
 
 # 图片存储信息
-IMAGES_STORE = os.path.join(PROJECT_DIR,'data/images')
+IMAGES_STORE = os.path.join(PROJECT_DIR,'template/data/images')
 IMAGES_EXPIRES = 30
 IMAGES_THUMBS = {
     'small': (50, 50),
