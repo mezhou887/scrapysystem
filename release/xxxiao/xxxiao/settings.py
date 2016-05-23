@@ -13,8 +13,6 @@ NEWSPIDER_MODULE = 'xxxiao.spiders'
 
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.cookies.CookiesMiddleware': None, # 禁用cookies
-     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None, #禁用系统内置的User-Agent
-     'misc.middleware.CustomUserAgentMiddleware': 300, # 用我自己的User-Agent，随机取一个值
 }
 
 
