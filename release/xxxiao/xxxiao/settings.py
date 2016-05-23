@@ -19,11 +19,10 @@ DOWNLOADER_MIDDLEWARES = {
 
 
 ITEM_PIPELINES = {
-    'xxxiao.file_pipeline.DoNothingPipeline': 100,
     'scrapy.pipelines.images.ImagesPipeline': 200,
 #    'scrapy.pipelines.files.FilesPipeline': 200,
     'xxxiao.file_pipeline.JsonPipeline': 300,
-    'scrapy_mongodb.MongoDBPipeline': 600,
+#     'scrapy_mongodb.MongoDBPipeline': 600,
 }
 
 

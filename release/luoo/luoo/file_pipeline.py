@@ -7,12 +7,21 @@ from collections import OrderedDict
 from luoo.items import *
 from scrapy.http import Request
 from scrapy.pipelines.files import FilesPipeline
+import datetime
+import platform
   
     
 class JsonPipeline(object):
 
     def __init__(self):
-        self.file = codecs.open('luoo.json', 'w', encoding='utf-8')
+        sysstr = platform.system()
+        if(sysstr =="Windows"):
+            self.file = codecs.open('E:\Crawler\export\luoo_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
+        elif(sysstr == "Darwin"):
+            self.file = codecs.open('/Volumes/"VMware Shared Folders"/ScrapyData/luoo_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')
+        else:
+            self.file = codecs.open('luoo_'+datetime.datetime.now().strftime('%Y%m%d')+'.json', 'w', encoding='utf-8')        
+        
 
     def process_item(self, item, spider):
         line = json.dumps(OrderedDict(item), ensure_ascii=False, sort_keys=False) + "\n"
