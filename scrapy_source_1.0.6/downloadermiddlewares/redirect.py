@@ -8,6 +8,7 @@ from scrapy.exceptions import IgnoreRequest, NotConfigured
 logger = logging.getLogger(__name__)
 
 
+# 支持跳转功能的中间件
 class BaseRedirectMiddleware(object):
 
     enabled_setting = 'REDIRECT_ENABLED'

@@ -1,7 +1,5 @@
 """
-This is a middleware to respect robots.txt policies. To activate it you must
-enable this middleware and enable the ROBOTSTXT_OBEY setting.
-
+robots封禁处理，默认不使用该中间件，使用时需启用
 """
 
 import logging
@@ -36,10 +34,10 @@ class RobotsTxtMiddleware(object):
             return
         rp = self.robot_parser(request, spider)
         if rp and not rp.can_fetch(self._useragent, request.url):
-            logger.debug("Forbidden by robots.txt: %(request)s",
-                         {'request': request}, extra={'spider': spider})
+            logger.debug("Forbidden by robots.txt: %(request)s", {'request': request}, extra={'spider': spider})
             raise IgnoreRequest
-
+    
+    # 获取到网站下面的robots.txt文件并进行处理
     def robot_parser(self, request, spider):
         url = urlparse_cached(request)
         netloc = url.netloc
@@ -63,6 +61,7 @@ class RobotsTxtMiddleware(object):
                          exc_info=failure_to_exc_info(failure),
                          extra={'spider': spider})
 
+    # 这里面是具体的处理过程
     def _parse_robots(self, response):
         rp = robotparser.RobotFileParser(response.url)
         rp.parse(response.body.splitlines())

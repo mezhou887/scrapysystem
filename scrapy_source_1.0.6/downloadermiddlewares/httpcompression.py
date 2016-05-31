@@ -12,7 +12,7 @@ class HttpCompressionMiddleware(object):
     
     @classmethod
     def from_crawler(cls, crawler):
-        if not crawler.settings.getbool('COMPRESSION_ENABLED'):
+        if not crawler.settings.getbool('COMPRESSION_ENABLED'):  # 默认是支持压缩功能
             raise NotConfigured
         return cls()
     
@@ -38,6 +38,7 @@ class HttpCompressionMiddleware(object):
 
         return response
 
+    # 如果返回来的文件是压缩的话，先解压
     def _decode(self, body, encoding):
         if encoding == 'gzip' or encoding == 'x-gzip':
             body = gunzip(body)

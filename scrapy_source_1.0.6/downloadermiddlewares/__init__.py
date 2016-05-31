@@ -1,5 +1,5 @@
 """
-系统内置的下载中间件, 主要就是process_request和process_response这两个方法，这个包是重点
+系统全部的内置下载中间件
 {
 'scrapy.downloadermiddlewares.robotstxt.RobotsTxtMiddleware': 100,
 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware': 300,
@@ -17,4 +17,7 @@
 'scrapy.downloadermiddlewares.stats.DownloaderStats': 850,
 'scrapy.downloadermiddlewares.httpcache.HttpCacheMiddleware': 900,
 }
+
+系统中内置启用的下载中间件
+
 """

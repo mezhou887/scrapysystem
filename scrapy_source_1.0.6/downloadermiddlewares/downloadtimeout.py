@@ -1,7 +1,5 @@
 """
-Download timeout middleware
-
-See documentation in docs/topics/downloader-middleware.rst
+设置下载超时的中间件，默认为180秒
 """
 
 from scrapy import signals

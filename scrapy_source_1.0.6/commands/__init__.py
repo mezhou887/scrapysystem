@@ -103,6 +103,6 @@ class ScrapyCommand(object):
 
     def run(self, args, opts):
         """
-        Entry point for running commands
+                该方法的实现交给子类来实现
         """
         raise NotImplementedError

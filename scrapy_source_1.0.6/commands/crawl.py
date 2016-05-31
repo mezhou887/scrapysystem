@@ -43,11 +43,13 @@ class Command(ScrapyCommand):
                                  " from the supported list %s" % (opts.output_format, tuple(valid_output_formats)))
             self.settings.set('FEED_FORMAT', opts.output_format, priority='cmdline')
 
+    # 爬虫运行的入口位置，每次只能运行一个爬虫
     def run(self, args, opts):
         if len(args) < 1:
             raise UsageError()
         elif len(args) > 1:
             raise UsageError("running 'scrapy crawl' with more than one spider is no longer supported")
+        # 爬虫名字为第一个参数
         spname = args[0]
 
         self.crawler_process.crawl(spname, **opts.spargs)

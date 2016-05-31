@@ -31,7 +31,6 @@ logger = logging.getLogger(__name__)
 class FileException(Exception):
     """General media error exception"""
 
-
 class FSFilesStore(object):
 
     def __init__(self, basedir):
@@ -70,7 +69,7 @@ class FSFilesStore(object):
                 os.makedirs(dirname)
             seen.add(dirname)
 
-
+# 用不上
 class S3FilesStore(object):
 
     AWS_ACCESS_KEY_ID = None
@@ -155,7 +154,7 @@ class FilesPipeline(MediaPipeline):
     def __init__(self, store_uri, download_func=None):
         if not store_uri:
             raise NotConfigured
-        self.store = self._get_store(store_uri)
+        self.store = self._get_store(store_uri) #根据url来决定使用什么存储的
         super(FilesPipeline, self).__init__(download_func=download_func)
 
     @classmethod
@@ -171,7 +170,7 @@ class FilesPipeline(MediaPipeline):
         return cls(store_uri)
 
     def _get_store(self, uri):
-        if os.path.isabs(uri):  # to support win32 paths like: C:\\some\dir
+        if os.path.isabs(uri):
             scheme = 'file'
         else:
             scheme = urlparse(uri).scheme
@@ -189,9 +188,11 @@ class FilesPipeline(MediaPipeline):
 
             age_seconds = time.time() - last_modified
             age_days = age_seconds / 60 / 60 / 24
-            if age_days > self.EXPIRES:
-                return  # returning None force download
-
+            
+            # 用当前时间和response中Headers参数中的last_modified做对比，小于90天则不进行下载
+            if age_days > self.EXPIRES:   
+                return  
+            
             referer = request.headers.get('Referer')
             logger.debug(
                 'File (uptodate): Downloaded %(medianame)s from %(request)s '

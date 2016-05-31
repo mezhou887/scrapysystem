@@ -1,6 +1,7 @@
 """
 Item pipeline
-各种媒体类型文件的存储相关的，存储文件，图片，媒体等，这个也是重点，需好好阅读源代码
+各种媒体类型文件的存储相关的，存储文件，图片，媒体等，重点，需好好阅读
+ImagesPipeline --> FilesPipeline --> MediaPipeline
 """
 
 from scrapy.middleware import MiddlewareManager
