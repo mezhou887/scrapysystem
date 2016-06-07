@@ -70,7 +70,7 @@ def send_mail():
 
 if __name__ == '__main__':
     schedule.every(5).minutes.do(job)
-    schedule.every().day.at("00:15").do(send_mail)
+    schedule.every().day.at("21:15").do(send_mail)
     
     while True:
         schedule.run_pending()
