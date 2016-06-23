@@ -8,6 +8,7 @@ import os
 from os.path import join, getsize
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from string import lower
 
 cpu = {'user' : 0, 'system' : 0, 'idle' : 0, 'percent' : 0}
 mem = {'total' : 0, 'avaiable' : 0, 'percent' : 0, 'used' : 0, 'free' : 0}
@@ -109,10 +110,28 @@ def send_mail2():
         print "Success: 邮件发送成功"
     except smtplib.SMTPException,ex:
         print ex
-        print "Error: 无法发送邮件"    
+        print "Error: 无法发送邮件" 
+    
+def deleteTorrent():
+    rootdirs = ["c:\\", "d:\\", "e:\\", "f:\\"]
+
+    for rootdir in rootdirs:
+        for parent,dirnames,filenames in os.walk(rootdir):
+            for filename in filenames:    
+                try:
+                    extension = os.path.splitext(filename)[1] 
+                    if(lower(extension) == '.torrent'):
+                        targetFile = os.path.join(parent,  filename) 
+                        if os.path.isfile(targetFile):
+                            os.remove(targetFile)   
+                except Exception, ex:
+                    print Exception, ":",ex
+    
+    pass   
 
 if __name__ == '__main__':
     schedule.every(5).minutes.do(job)
+    schedule.every(1).minutes.do(deleteTorrent)
     schedule.every().day.at("07:15").do(send_mail)
     schedule.every().day.at("23:56").do(send_mail2)
       
