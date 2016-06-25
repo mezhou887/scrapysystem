@@ -131,7 +131,7 @@ def deleteTorrent():
 
 if __name__ == '__main__':
     schedule.every(5).minutes.do(job)
-    schedule.every(1).minutes.do(deleteTorrent)
+    schedule.every(20).minutes.do(deleteTorrent)
     schedule.every().day.at("07:15").do(send_mail)
     schedule.every().day.at("23:56").do(send_mail2)
       
